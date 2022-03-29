@@ -27,7 +27,7 @@
 \subtitle{Object-Oriented Design, IV1350}
 \author{Pontus Söderlund, psoderlu@kth.se}
 % \date{\today} Prints today's date
-\date{Today's date}
+\date{March 30th}
 
 \begin{document}
 
@@ -36,19 +36,77 @@
 \tableofcontents %Generates the TOC
 
 \chapter{Introduction}
-
-A summary of the seminar task. Also, tell who you worked with when solving the task. 
+    % A summary of the seminar task. Also, tell who you worked with when solving the task. 
+    The goal of this seminar is to create a domain model (DM) for a retail store
+    and a system sequence diagram (SSD) for a sale.
 
 \chapter{Method}
+    % Explain how you arrived at the solution presented in chapter \ref{sec:result}.
+    % For example, one of the things to explain in the report for seminar one, is
+    % how you used a category list and noun identification to find class candidates
+    % for the domain model.
+    
+    \section{Domain Model}
+        The process for creating a domain model can be borken down into five the 
+        five steps listed bellow.
 
-Explain how you arrived at the solution presented in chapter \ref{sec:result}. For example, one of the things to explain in the report for seminar one, is how you used a category list and noun identification to find class candidates for the domain model.
+        \subsection{Identify class candidates}
+            The first step is to read the specification and find all the nouns in
+            in it. For the requirements in this lab some of the words found are
+            listed below.
+
+            \begin{itemize}
+                \item Customer
+                \item Goods
+                \item Cashier
+                \item Register
+                \item Cash
+                \item Change
+                \item Program
+                \item Reciept
+            \end{itemize}
+
+        \subsection{Use a category list}
+            The second step is to use a category list to find even more class
+            candidates.
+
+            A category list is a tool to help find more class candidates by
+            giving examples of categories that things not tought of in the first
+            step belongs to. The project requiremients might for  
+        
+        \subsection{Filter class candidates}
+            The next step is to filter out the class candidates that do not
+            provide any additional value. It might be that one was too thorugh
+            in previous steps or that the same information is in multiple places
+            or something similar.
+            
+            In this case it 
+
+        \subsection{Find attributes}
+            After having filtered the class candidates I identified classes that
+            were more suitable as attributes to classes. 
+            
+            Attributes are things that describe a class and not something that's
+            part of it. A clear example of an attribute is a customer id since
+            it is just an identifier for any given customer. An example of
+            something that's not an attribute is a reciept since it can exist
+            independently of a transaction.
+
+        \subsection{Add associations}
+            The last step is to att associations between the different classes.
+            The program I used did not have any way (that I found) to create 
+
+    \section{System Sequence Diagram}
+            
 
 \chapter{Result}
 \label{sec:result}
+    % This chapter shall contain the solution to the seminar tasks, together with
+    % a short explanation. There are more detailed instructions in each
+    % assignment.
 
-This chapter shall contain the solution to the seminar tasks, together with a short explanation. There are more detailed instructions in each assignment.
-
-Remember that code extracts and diagrams must be numbered, have caption and be explained in the text, see figures \ref{fig:diag} and \ref{fig:code}
+    % Remember that code extracts and diagrams must be numbered, have caption and
+    % be explained in the text, see figures \ref{fig:diag} and \ref{fig:code}
 
 \begin{figure}[h!]
   \begin{center}
