@@ -1,6 +1,7 @@
 \documentclass[a4paper]{scrreprt}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
+
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -11,6 +12,8 @@
 \usepackage{pgf}
 \usepackage{wrapfig}
 \usepackage{fancyvrb}
+
+\graphicspath{{./}}
 
 % Create header and footer
 \headheight 27pt
@@ -47,7 +50,7 @@
     % for the domain model.
     
     \section{Domain Model}
-        The process for creating a domain model can be borken down into five the 
+        The process for creating a domain model can be broken down into five the 
         five steps listed bellow.
 
         \subsection{Identify class candidates}
@@ -63,43 +66,46 @@
                 \item Cash
                 \item Change
                 \item Program
-                \item Reciept
+                \item Receipt
             \end{itemize}
 
         \subsection{Use a category list}
             The second step is to use a category list to find even more class
-            candidates.
-
-            A category list is a tool to help find more class candidates by
-            giving examples of categories that things not tought of in the first
-            step belongs to. The project requiremients might for  
+            candidates. A category list is a tool to help find more class candidates by
+            giving examples of categories that things not thought of in the first
+            step belongs to. I used it by going through all entries in the course book
+            and asking myself the question, ''What could this mean in the context of a
+            store?''. When I found something somewhat relevant I added it to the list of
+            class candidates.
         
         \subsection{Filter class candidates}
             The next step is to filter out the class candidates that do not
-            provide any additional value. It might be that one was too thorugh
+            provide any additional value. It might be that one was too meticulous
             in previous steps or that the same information is in multiple places
-            or something similar.
-            
-            In this case it 
+            or something similar. In this case it meant that classes such as 
+            ''Scanner'' and ''Storeshef'' were removed.
 
         \subsection{Find attributes}
             After having filtered the class candidates I identified classes that
-            were more suitable as attributes to classes. 
-            
-            Attributes are things that describe a class and not something that's
-            part of it. A clear example of an attribute is a customer id since
-            it is just an identifier for any given customer. An example of
-            something that's not an attribute is a reciept since it can exist
-            independently of a transaction.
+            were more suitable as attributes to classes. Attributes are things 
+            that describe a class and not something that's part of it. A clear example
+            of an attribute is a customer id since it is just an identifier for any
+            given customer. An example of something that's not an attribute is a
+            receipt since it can exist independently of a transaction.
 
         \subsection{Add associations}
-            The last step is to att associations between the different classes.
+            The last step is to add associations between the different classes.
             The program I used did not have any way (that I found) to create
             the > (Class 1 Verb > Class 2) notation used in the lectures, I
             decided to use the directional association arrows instead. 
 
     \section{System Sequence Diagram}
-            
+        In order to create a ssd I went through all the steps in the process and 
+        identified the main actor, the cashier, and the System (the register). After
+        having done that I started going through all the steps and adding methods 
+        for the steps that required it. When I came to a point where the system 
+        communicated with another system I added it and created a method for data
+        to be passed between them.
 
 \chapter{Result}
     \label{sec:result}
@@ -109,25 +115,60 @@
 
     % Remember that code extracts and diagrams must be numbered, have caption and
     % be explained in the text, see figures \ref{fig:diag} and \ref{fig:code}
-
-    \begin{figure}[h!]
-        \begin{center}
-            \includegraphics[scale=1.0]{dm1.png}
-            \caption{A sample diagram to illustrate caption (this text), numbering and reference in text.}
-            \label{fig:dm}
-        \end{center}
-    \end{figure}
-
-    \begin{figure}[h!]
-        \begin{center}
-            \includegraphics[scale=1.0]{ssd1.png}
-            \caption{A sample diagram to illustrate caption (this text), numbering and reference in text.}
-            \label{fig:ssd}
-        \end{center}
-    \end{figure}
+    
+    \section{Domain Model}
+        Figure \ref{fig:dm} shows a domain model for the requirements. The most interesting
+        part of the model is ''Transaction'' because it is the reason for everything else
+        existing. As mentioned above it could be argued that transaction should be split up
+        into a transaction component containing, date and time and a payment class that
+        contains details about the payment, but since I don't see any additional value being
+        created from doing it I've decided not to. Again, the associations should not be
+        directional, but since I didn't find a better solution to describe how the associations
+        should be read they're there now.
+        
+        \begin{figure}[ht!]
+            \begin{center}
+                \includegraphics[scale=0.3]{dm1.png}
+                \caption{The final domain model}
+                \label{fig:dm}
+            \end{center}
+        \end{figure}
+    
+    \newpage
+    
+    \section{System Sequence Diagram}
+        Figure \ref{fig:ssd} shows the system sequence diagram where ''Register'' is 
+        the central object. The flow of the program is:
+        
+        \begin{enumerate}
+            \item Scan items \\
+                It is not relevant how the items are scanned, which is why there's no
+                logic for if the customer has more items or whatever.
+                
+            \item Apply Discount \\
+                Pretty straight forward, if the customer has a discount the customers
+                id is sent away to a database of all discounts and the correct one(s) is
+                applied. 
+                
+            \item Get the price \\
+                The cashier gets the total price and tells the customer.
+                
+            \item Make the payment
+                The customer makes the payment which is registered in the register and
+                then the details of the transaction is sent to the accounting, inventory
+                and printer.
+                
+        \end{enumerate}
+        
+        \begin{figure}[ht!]
+            \begin{center}
+                \includegraphics[scale=0.3]{ssd1.png}
+                \caption{The system sequence diagram}
+                \label{fig:ssd}
+            \end{center}
+        \end{figure}
 
 \chapter{Discussion}
-
     % Write an evaluation of the results presented in the result chapter (chapter
     % \ref{sec:result} in this template). To get inspiration for the evaluation,
     % read the assessment criteria in the documents \texttt{assessment-criteria-seminarX.pdf},
@@ -138,17 +179,17 @@
             I would not consider the DM naïve since it does not model flow but a
             snapshot of how everything fits together.
 
-        \subsection{Are there ''spider-in-the-web'' classes?}
+        \subsection{Are there ''spider-in-the-web'' classes?}
             I would consider ''Transaction'' to be a bit of a ''spider-in-the-web''.
             However, it is justified because ''Transaction'' is such an essential
             part. Nothing else serves any purpose without a transaction since the
             only point of a store is to facilitate transactions between parties.
             
-        \subsection{Can you understand the DM? Is it a correct description of the problem domain?}
+        \subsection{Can you understand the DM? Is it a correct description of the problem domain?}
             I think that it is clear what the different classes represent and what
             associations they have with other classes. I might be biased though.
 
-        \subsection{Does the DM have a reasonable number of classes? Are important classes missing?}
+        \subsection{Does the DM have a reasonable number of classes? Are important classes missing?}
             I believe that there's a  number of classes for the given
             requirements, if anything there are too few.
 
@@ -157,31 +198,27 @@
             be useful in a program, but since it's not a program it serves it
             purpose.
 
-        \subsection{Do you agree with the choices between class and attribute?}
+        \subsection{Do you agree with the choices between class and attribute?}
             Yes! It might have been better to have another class called 'Payment'
             so that the customer could make a payment and the cashier could
             receive payment, but I do feel that that that would be unnecessary 
             since it wouldn't add any additional information.
 
-        \subsection{Is there a reasonable number of associations? Do you understand them? Are there classes missing associations? If so, is that a mistake?}
+        \subsection{Is there a reasonable number of associations? Do you understand them? Are there classes missing associations? If so, is that a mistake?}
             No class is missing associations and I believe the associations are
             clear. More associations could be added, but I don't think that 
             would add any value.
 
-        \subsection{Are naming conventions followed in DM and SSD?}
+        \subsection{Are naming conventions followed in DM and SSD?}
             The naming conventions follow traditional Java naming conventions.
 
-        \subsection{Is UML used correctly in DM and SSD?}
+        \subsection{Is UML used correctly in DM and SSD?}
             Besides the associations having directions I believe the diagramss
             adhere to the UML standard.
 
-        \subsection{Are the correct objects included in the SSD?}
+        \subsection{Are the correct objects included in the SSD?}
+            I feel like they are, although I'm no expert. The only thing that
+            might be missing is ''Customer'', but since the customer has nothing
+            to do with the system it's not included.
 
-
-        \subsection{Are the correct operations and return values included in the SSD?}
-
-
-        \subsection{Is the method and result explained in the report? Is there a discussion? Is the discussion relevant?}
-
-        
 \end{document}
