@@ -94,7 +94,9 @@
 
         \subsection{Add associations}
             The last step is to att associations between the different classes.
-            The program I used did not have any way (that I found) to create 
+            The program I used did not have any way (that I found) to create
+            the > (Class 1 Verb > Class 2) notation used in the lectures, I
+            decided to use the directional association arrows instead. 
 
     \section{System Sequence Diagram}
             
@@ -126,6 +128,59 @@
 
 \chapter{Discussion}
 
-Write an evaluation of the results presented in the result chapter (chapter \ref{sec:result} in this template). To get inspiration for the evaluation, read the assessment criteria in the documents \texttt{assessment-criteria-seminarX.pdf}, which are available on the \texttt{Assignments} page of the course web.
+    % Write an evaluation of the results presented in the result chapter (chapter
+    % \ref{sec:result} in this template). To get inspiration for the evaluation,
+    % read the assessment criteria in the documents \texttt{assessment-criteria-seminarX.pdf},
+    % which are available on the \texttt{Assignments} page of the course web.
 
+    \section{Assesement Criterias}
+        \subsection{Typical mistakes are to create a ''programmatic DM'' or a ''naïve DM''. Is the DM either of those?}
+            I would not consider the DM naïve since it does not model flow but a
+            snapshot of how everything fits together.
+
+        \subsection{Are there ''spider-in-the-web'' classes?}
+            I would consider ''Transaction'' to be a bit of a ''spider-in-the-web''.
+            However, it is justified because ''Transaction'' is such an essential
+            part. Nothing else serves any purpose without a transaction since the
+            only point of a store is to facillitate transactions between parties.
+            
+        \subsection{Can you understand the DM? Is it a correct description of the problem domain?}
+            I think that it is clear what the different classes represent and what
+            associations they have with other classes. I might be biased though.
+
+        \subsection{Does the DM have a reasonable number of classes? Are important classes missing?}
+            I belive that there's a sufficent number of classes for the given
+            requirements, if anything there are too few.
+
+        \subsection{Are there irrelevant classes?}
+            Not that I can think of, some classes, like store would probably not
+            be useful in a program, but since it's not a program it serves it
+            purpose.
+
+        \subsection{Do you agree with the choices between class and attribute?}
+            Yes! It might have been better to have another class called 'Payment'
+            so that the customer could make a payment and the cashier could
+            recieve payment, but I do feel that that that would be uncesseary 
+            since it wouldnt add any additional infomration.
+
+        \subsection{Is there a reasonable number of associations? Do you understand them? Are there classes missing associations? If so, is that a mistake?}
+            No class is missing associations and I believe the associations are
+            clear. More associations could be added, but I don't think that 
+            would add any value.
+
+        \subsection{Are naming conventions followed in DM and SSD?}
+
+
+        \subsection{Is UML used correctly in DM and SSD?}
+
+
+        \subsection{Are the correct objects included in the SSD?}
+
+
+        \subsection{Are the correct operations and return values included in the SSD?}
+
+
+        \subsection{Is the method and result explained in the report? Is there a discussion? Is the discussion relevant?}
+
+        
 \end{document}
