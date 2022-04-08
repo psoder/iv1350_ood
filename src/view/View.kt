@@ -2,6 +2,7 @@ package view
 
 import integration.Receipt
 import controller.Controller
+import kotlin.system.*
 
 class View(val controller: Controller) {
 
@@ -16,6 +17,7 @@ class View(val controller: Controller) {
             println("1. Enter item")
             println("2. Apply discount")
             println("3. Finnish transaction")
+            println("4. Exit")
             
             when(readLine()!!) {
                 "1" -> {
@@ -47,6 +49,7 @@ class View(val controller: Controller) {
 
                     break
                 }
+                "4" -> exitProcess(0)
                 else -> {
                     println("Not a valid input")
                 }

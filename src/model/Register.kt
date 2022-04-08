@@ -26,6 +26,6 @@ class Register(
     }
 
     fun printReceipt(): Unit {
-        printer.
+
     }
 }
