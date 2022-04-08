@@ -1,9 +1,22 @@
 package controller
 
-class Controller {
+import model.Register
+import view.View
 
-    fun test() {
+class Controller(
+    val register: Register,
+) {
 
+    fun pay(amount:Double): Unit {
+       register.pay(amount)
+    }
+
+    fun enterItem(itemId: String): Unit {
+        register.enterItem(itemId);
+    }
+
+    fun applyDiscount(customerId: String): Unit {
+        register.applyDiscount(customerId)
     }
 
 }
