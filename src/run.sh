@@ -1,4 +1,9 @@
 #!/bin/sh
-kotlinc -cp $(ls -d */) *.kt -include-runtime -d compiled.jar
+# Compiling
+kotlinc ./ -include-runtime -d compiled.jar
+
+# Executing
 java -jar compiled.jar
+
+# Cleaning up
 rm compiled.jar
