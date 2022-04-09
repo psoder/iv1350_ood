@@ -1,16 +1,17 @@
 package model
 
 import integration.*
-
 import integration.Item
 
 class Register(
     val printer: Printer,
     val itemRegistry: ItemRegistry,
     val customerRegistry: CustomerRegistry,
-    val salesLog: SalesLog
+    val salesLog: SalesLog,
+    val seller: String = "Agent Smith",
+    val place: String = "The Matrix",
 ) {
-    var items = ArrayList<Item>()
+    var transaction = Transaction(place, seller)
     var discount = 0
     
     fun pay(amount:Double): Unit {
@@ -18,7 +19,8 @@ class Register(
     }
 
     fun enterItem(itemId: String): Unit {
-        itemRegistry.getItem(itemId)
+        val item = itemRegistry.getItem(itemId)
+        transaction.addItem(item)
     }
 
     fun applyDiscount(customerId: String): Unit {

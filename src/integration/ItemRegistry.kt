@@ -8,7 +8,7 @@ class ItemRegistry {
 
     // Create a list of items
     init {
-        val products = listOf("Apple", "Banana", "Kiwi", "Grapefruit")
+        val products = listOf("Apple", "Banana", "Kiwi", "Orange")
         for (index in products.indices) {
             val price = Random.nextDouble(0.0, 20.0)
             val quantity = Random.nextInt(30, 100)

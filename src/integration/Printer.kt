@@ -2,8 +2,8 @@ package integration
 
 class Printer {
 
-    fun printReceipt(receipt: Receipt) {
-        println("Printer:\n $receipt")
+    fun print(obj: Any) {
+        println("Printer:\n $obj")
     } 
 
 }

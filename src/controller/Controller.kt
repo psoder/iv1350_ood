@@ -1,7 +1,7 @@
 package controller
 
 import model.Register
-import view.View
+import integration.Transaction
 
 class Controller(
     val register: Register,
@@ -17,6 +17,10 @@ class Controller(
 
     fun applyDiscount(customerId: String): Unit {
         register.applyDiscount(customerId)
+    }
+
+    fun currentTransaction(): Transaction {
+        return register.transaction
     }
 
 }

@@ -1,6 +1,6 @@
 package view
 
-import integration.Receipt
+import integration.Transaction 
 import controller.Controller
 import kotlin.system.*
 
@@ -12,7 +12,8 @@ class View(val controller: Controller) {
 
     fun handleTransaction(): Unit {
         while (true) {
-            println("Cart: \n")
+            println("\nCart:")
+            println("${controller.currentTransaction().transactionList()}\n")
 
             println("1. Enter item")
             println("2. Apply discount")
