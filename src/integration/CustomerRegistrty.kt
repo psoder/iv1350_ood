@@ -16,7 +16,7 @@ class CustomerRegistry {
     }
 
     fun getDiscount(customerId: String): Int {
-        return customers.get(customerId)?.discount ?: throw NoSuchElementException("No customer with id $customerId exists")
+        return customers.get(customerId)?.discount
+                ?: throw NoSuchElementException("No customer with id $customerId exists")
     }
-
 }

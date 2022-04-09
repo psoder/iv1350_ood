@@ -5,6 +5,7 @@ import integration.Transaction
 
 class Controller(
     val register: Register,
+    val customers: CustomerRegistry,
 ) {
 
     fun pay(amount:Double): Unit {

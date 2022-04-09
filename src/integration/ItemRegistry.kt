@@ -17,7 +17,8 @@ class ItemRegistry {
     }
 
     fun getItem(itemId: String): Item {
-        return items.get(itemId)?.first ?: throw NoSuchElementException("No item with id $itemId exists")
+        return items.get(itemId)?.first
+                ?: throw NoSuchElementException("No item with id $itemId exists")
     }
 
     fun stockOf(item: Item): Int {

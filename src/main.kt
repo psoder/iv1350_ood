@@ -1,13 +1,12 @@
 package main
 
-import view.*
 import controller.*
-import model.*
 import integration.*
-import java.util.Scanner
+import model.*
+import view.*
 
 fun main() {
-    // Integration 
+    // Integration
     val printer = Printer()
     val itemRegistry = ItemRegistry()
     val customerRegistry = CustomerRegistry()
@@ -15,7 +14,7 @@ fun main() {
 
     // Model
     val register = Register(printer, itemRegistry, customerRegistry, salesLog)
-    
+
     // Controller
     val controller = Controller(register)
 
@@ -23,4 +22,4 @@ fun main() {
     val view = View(controller)
 
     view.handleTransaction()
- }
+}
