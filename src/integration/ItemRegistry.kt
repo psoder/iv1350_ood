@@ -25,3 +25,14 @@ class ItemRegistry {
         return items.get(item.id)?.second ?: throw NoSuchElementException("$item does not exist")
     }
 }
+
+data class Item(
+        val id: String,
+        val name: String,
+        var price: Double,
+        val vat: Double = 6.0,
+) {
+    init {
+        price = Math.round(price * 10) / 10.0
+    }
+}

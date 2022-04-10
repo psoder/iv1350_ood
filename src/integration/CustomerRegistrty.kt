@@ -20,3 +20,9 @@ class CustomerRegistry {
                 ?: throw NoSuchElementException("No customer with id $customerId exists")
     }
 }
+
+data class Customer(
+        val id: String,
+        val name: String,
+        val discount: Int,
+) {}
