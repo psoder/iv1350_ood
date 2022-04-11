@@ -21,9 +21,9 @@ class ItemRegistry {
                 ?: throw NoSuchElementException("No item with id $itemId exists")
     }
 
-    fun stockOf(item: Item): Int {
-        return items.get(item.id)?.second ?: throw NoSuchElementException("$item does not exist")
-    }
+    // fun stockOf(item: Item): Int {
+    //     return items.get(item.id)?.second ?: throw NoSuchElementException("$item does not exist")
+    // }
 }
 
 data class Item(

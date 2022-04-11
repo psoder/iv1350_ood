@@ -13,10 +13,10 @@ fun main() {
     val salesLog = SalesLog()
 
     // Model
-    val register = Register(printer, itemRegistry, customerRegistry, salesLog)
+    val register = Register(itemRegistry, customerRegistry, salesLog)
 
     // Controller
-    val controller = Controller(register)
+    val controller = Controller(register, printer)
 
     // View
     val view = View(controller)
