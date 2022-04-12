@@ -20,8 +20,8 @@ class ItemRegistry {
         return items.get(itemId)?.first      
     }
 
-    fun updateInventory(change: Map<String, Int>) {
-        for((id, change) in change) {
+    fun updateInventory(changes: Map<String, Int>) {
+        for((id, change) in changes) {
 
         }
     }

@@ -1,5 +1,6 @@
 package controller
 
+import integration.Accounting
 import integration.DiscountRegistry
 import integration.Item
 import integration.ItemRegistry
@@ -15,6 +16,7 @@ class Controller(
         val itemRegistry: ItemRegistry,
         val discountRegistry: DiscountRegistry,
         val salesLog: SalesLog,
+        val accounting: Accounting
 ) {
 
     /**
@@ -52,6 +54,7 @@ class Controller(
         val receipt = register.pay(amount)
         printer.print(receipt)
         salesLog.log(receipt)
+        accounting.log(receipt)
         return receipt
     }
 }

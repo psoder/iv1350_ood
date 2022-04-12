@@ -11,12 +11,13 @@ fun main() {
     val itemRegistry = ItemRegistry()
     val discountRegistry = DiscountRegistry()
     val salesLog = SalesLog()
+    val accounting = Accounting()
 
     // Model
     val register = Register()
 
     // Controller
-    val controller = Controller(register, printer, itemRegistry, discountRegistry, salesLog)
+    val controller = Controller(register, printer, itemRegistry, discountRegistry, salesLog, accounting)
 
     // View
     val view = View(controller)

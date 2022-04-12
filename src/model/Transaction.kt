@@ -3,7 +3,7 @@ package model
 import integration.Item
 import integration.Receipt
 
-class Transaction() {
+class Transaction {
     // Item, discount, quantity
     var items = HashMap<String, Triple<Item, Int, Int>>()
 
