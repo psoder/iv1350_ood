@@ -2,29 +2,44 @@ package model
 
 import integration.*
 
-class Register(
-        val itemRegistry: ItemRegistry,
-        val customerRegistry: CustomerRegistry,
-        val salesLog: SalesLog,
-        val seller: String = "Agent Smith",
-        val place: String = "The Matrix",
-) {
-    var transaction = Transaction(place, seller)
+class Register {
+    var balance = 0.0
+    var transaction: Transaction? = Transaction()
 
-    fun pay(amount: Double): Double {
-        val price = transaction.price()
+    /**
+     * Finnishes a transaction and increments the registers balance
+     * 
+     * @param amount is the amount the customer pays
+     * @return a receipt of the transaction 
+     * @throws IllegalStateException
+    */
+    fun pay(amount: Double): Receipt {
+        val t: Transaction = transaction ?: throw IllegalStateException("No current transaction")
+        val price = t.price()
         require(amount >= price) { "You poor, $amount is less than $price" }
-        return amount - price
+        balance += price
+        val receipt = t.getReceipt(amount) 
+        transaction = null
+        return receipt
     }
 
-    fun enterItem(itemId: String) {
-        val item = itemRegistry.getItem(itemId)
-        transaction.addItem(item)
+    /**
+     * Adds an item to the current transaction if it exists.
+     * 
+     * @param itemId the id of the item to add
+     * @throws IllegalStateException
+     */
+    fun enterItem(item: Item) {
+        transaction?.addItem(item) ?: throw IllegalStateException("No current transaction")
     }
 
-    fun applyDiscount(customerId: String) {
-        val discount = customerRegistry.getDiscount(customerId)
-        transaction.applyDiscount(discount)
-        transaction.customerId = customerId
+    /**
+     * Applies any applicable discounts to the transaction based on the customers id.
+     * 
+     * @param customerId the customers id.
+     * @throws IllegalStateException
+     */
+    fun applyDiscount(discounts: Map<String, Int>) {
+        transaction?.applyDiscount(discounts) ?: throw IllegalStateException("No current transaction")
     }
 }

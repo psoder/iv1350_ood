@@ -1,22 +1,33 @@
 package controller
 
+import integration.DiscountRegistry
+import integration.Item
+import integration.ItemRegistry
 import integration.Printer
+import integration.Receipt
+import integration.SalesLog
 import model.Register
-import model.Transaction
 
 /** @author Pontus Söderlund */
 class Controller(
         val register: Register,
         val printer: Printer,
+        val itemRegistry: ItemRegistry,
+        val discountRegistry: DiscountRegistry,
+        val salesLog: SalesLog,
 ) {
 
     /**
      * Adds an item to the cart if a item with the id exists
      *
-     * @param itemId is the id of the item
+     * @param ids is a list contianing the item ids
      */
-    fun enterItem(itemId: String) {
-        register.enterItem(itemId)
+    fun enterItem(ids: List<String>) {
+        ids.forEach { id ->
+            val item: Item = itemRegistry.getItem(id)
+                ?: throw NoSuchElementException("No item with id $id exists")
+            register.enterItem(item)
+        }
     }
 
     /**
@@ -25,19 +36,22 @@ class Controller(
      * @param customerId is the id of the customer
      */
     fun applyDiscount(customerId: String) {
-        register.applyDiscount(customerId)
+        val discounts: Map<String, Int> =
+            discountRegistry.getDiscount(customerId)
+            ?: throw NoSuchElementException("No customer with id $customerId exists")
+        register.applyDiscount(discounts)
     }
 
     /**
-     * Pays and prints a receipt
+     * Pays for the items and prints a receipt for the transaction
      *
      * @param amount is the amount the customer pays
-     * @return change
+     * @return a receipt of the transaction
      */
-    fun pay(amount: Double): Double {
-        val change = register.pay(amount)
-        register.transaction.amountPaid = amount
-        printer.print(register.transaction.getReceipt())
-        return change
+    fun pay(amount: Double): Receipt {
+        val receipt = register.pay(amount)
+        printer.print(receipt)
+        salesLog.log(receipt)
+        return receipt
     }
 }

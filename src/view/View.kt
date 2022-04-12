@@ -1,25 +1,30 @@
 package view
 
 import controller.Controller
+import model.Transaction
 import kotlin.system.exitProcess
 
 class View(val controller: Controller) {
 
     fun transactionList(): String {
-        val transaction = controller.register.transaction
-        return transaction
-                .items
-                .groupBy { it.id }
+        val transaction: Transaction = controller.register.transaction ?:
+            throw IllegalStateException("No current transaction")
+        return transaction.items
                 .asIterable()
-                .fold("") { acc, (_, items) ->
-                    acc + "${items[0].name} \t ${items.size} x ${items[0].price}\n"
+                .fold("") { acc, items ->
+                    val item = items.value.first    
+                    acc.plus("${item.name}\t")
+                            .plus("${item.price}\t")
+                            .plus("${items.value.third}\t")
+                            .plus("${item.vat}%\t")
+                            .plus("${items.value.second}%\n")
                 }
-                .plus("Total: ${transaction.price()} ($transaction.discount% discount)")
+                .plus("Total:\t${transaction.price()}")
     }
 
     fun handleTransaction() {
         while (true) {
-            println("\nCart:")
+            println("\nItem\tPrice\tQty\tVAT\tDiscount")
             println("${transactionList()}\n")
 
             println("1. Enter item")
@@ -29,15 +34,15 @@ class View(val controller: Controller) {
 
             when (readLine()!!) {
                 "1" -> {
-                    println("Enter item ID")
+                    println("\nEnter item ID")
                     try {
-                        controller.enterItem(readLine()!!)
+                        controller.enterItem(readLine()!!.split(","))
                     } catch (e: Exception) {
                         println(e.message)
                     }
                 }
                 "2" -> {
-                    println("Enter customer ID")
+                    println("\nEnter customer ID")
                     try {
                         controller.applyDiscount(readLine()!!)
                     } catch (e: Exception) {
@@ -45,7 +50,7 @@ class View(val controller: Controller) {
                     }
                 }
                 "3" -> {
-                    println("Enter amount paid")
+                    println("\nEnter amount paid")
                     try {
                         controller.pay(readLine()!!.toDouble())
                     } catch (e: Exception) {

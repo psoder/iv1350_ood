@@ -1,5 +1,9 @@
 package integration
 
 class SalesLog {
-    // var transactions = ArrayList<Triple<Receipt, >>
+    val sales = ArrayList<Receipt>()
+
+    fun log(receipt: Receipt) {
+        sales.add(receipt)
+    }
 }

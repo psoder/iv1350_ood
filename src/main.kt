@@ -9,14 +9,14 @@ fun main() {
     // Integration
     val printer = Printer()
     val itemRegistry = ItemRegistry()
-    val customerRegistry = CustomerRegistry()
+    val discountRegistry = DiscountRegistry()
     val salesLog = SalesLog()
 
     // Model
-    val register = Register(itemRegistry, customerRegistry, salesLog)
+    val register = Register()
 
     // Controller
-    val controller = Controller(register, printer)
+    val controller = Controller(register, printer, itemRegistry, discountRegistry, salesLog)
 
     // View
     val view = View(controller)
