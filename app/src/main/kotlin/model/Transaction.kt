@@ -4,7 +4,7 @@ import integration.Item
 import integration.Receipt
 
 class Transaction {
-    // Item, discount, quantity
+    //  HashMap<Item id, <Item, discount, quantity>>
     var items = HashMap<String, Triple<Item, Int, Int>>()
 
     /**
@@ -31,7 +31,7 @@ class Transaction {
      * @return a Receipt with transaction info 
      */
     fun getReceipt(amountPaid: Double): Receipt {
-        return Receipt(items.toMap(), amountPaid, price(), vat())
+        return Receipt(items.toMap(), amountPaid)
     }
 
     /**
@@ -48,27 +48,26 @@ class Transaction {
     }
 
     /**
-     * Returns the price of the items in the cart
+     * Returns the price of the items in the cart excluding VAT including discounts
      *
      * @return the price of the items
      */
     fun price(): Double {
-        return items.asIterable().fold(0.0) { acc, items ->
-            acc + items.value.first.price
-                            .times((100 - items.value.second) / 100.0)
-                            .times(items.value.third)
-                            .times((100 + items.value.first.vat) / 100.0)
+        return items.asIterable().fold(0.0) { acc, (_, v) ->
+            acc + (v.first.price).times((100.0 - v.second) / 100.0).times(v.third)
         }
     }
 
     /**
-     * The amount of VAT on the current items
+     * The amount of VAT on the current items including dicounts
      * 
-     * @return the price of the VAT
+     * @return the amount of VAT
      */
     fun vat(): Double {
         return items.asIterable().fold(0.0) { acc, (_, v) ->
-            acc + v.first.price * v.second * (v.third) / 100
+            acc + (v.first.price * v.first.vat.rate / 100)
+                .times((100.0 - v.second) / 100.0)
+                .times(v.third)
         }
     }
 }

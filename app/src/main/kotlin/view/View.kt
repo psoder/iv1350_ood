@@ -16,10 +16,10 @@ class View(val controller: Controller) {
                     acc.plus("${item.name}\t")
                             .plus("${item.price}\t")
                             .plus("${items.value.third}\t")
-                            .plus("${item.vat}%\t")
+                            .plus("${item.vat.rate}%\t")
                             .plus("${items.value.second}%\n")
                 }
-                .plus("Total:\t${transaction.price()}")
+                .plus("Total:\t${"%.2f".format(transaction.price())}")
     }
 
     fun handleTransaction() {
