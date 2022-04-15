@@ -6,6 +6,7 @@
  * User Manual available at https://docs.gradle.org/7.4.2/userguide/building_java_projects.html
  */
 
+
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.6.20"
@@ -13,9 +14,6 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
 }
-
-java { toolchain { languageVersion.set(JavaLanguageVersion.of(17)) } }
-
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -41,11 +39,20 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("AppKt")
+    mainClass.set("main.MainKt")
 }
 
 sourceSets {
-    main { java { setSrcDirs(listOf("src")) } }
+    main { java { setSrcDirs(listOf("/main/")) } }
 
-    test { java { setSrcDirs(listOf("test")) } }
+    // test { java { setSrcDirs(listOf("test")) } }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions { jvmTarget = "16" }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_16
+    targetCompatibility = JavaVersion.VERSION_16
 }
