@@ -6,10 +6,10 @@
  * User Manual available at https://docs.gradle.org/7.4.2/userguide/building_java_projects.html
  */
 
-
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.6.20"
+    id("org.jetbrains.dokka") version "1.6.20"
 
     // Apply the application plugin to add support for building a CLI application in Java.
     application
@@ -35,6 +35,9 @@ dependencies {
 
     // Use the Kotlin JUnit integration.
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+
+    // dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.20")
+
 }
 
 application {
@@ -57,6 +60,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions { jvmTarget = "16" }
 }
 
-tasks.named<JavaExec>("run") {
-    standardInput = System.`in`
-}
+tasks.named<JavaExec>("run") { standardInput = System.`in` }
+
+tasks.dokkaHtml.configure { outputDirectory.set(buildDir.resolve("dokka")) }
