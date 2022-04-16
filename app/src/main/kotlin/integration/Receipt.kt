@@ -10,8 +10,8 @@ import java.time.LocalDateTime
  * @property amountPaid is how much the customer paid.
  */
 data class Receipt(
-        val items: Map<String, Triple<Item, Int, Int>>,
-        val amountPaid: Double
+    val items: Map<String, Triple<Item, Int, Int>>,
+    val amountPaid: Double
 ) {
     val time = LocalDateTime.now()
     val price = items.asIterable().fold(0.0) { acc, (_, v) ->

@@ -1,23 +1,24 @@
 package controller
 
-import integration.Accounting
-import integration.DiscountRegistry
-import integration.Item
-import integration.ItemRegistry
-import integration.Printer
-import integration.Receipt
-import integration.SalesLog
+import integration.*
 import model.Register
 
 /** @author Pontus Söderlund */
 class Controller(
-        val register: Register,
-        val printer: Printer,
-        val itemRegistry: ItemRegistry,
-        val discountRegistry: DiscountRegistry,
-        val salesLog: SalesLog,
-        val accounting: Accounting
+    val register: Register,
+    val printer: Printer,
+    val itemRegistry: ItemRegistry,
+    val discountRegistry: DiscountRegistry,
+    val salesLog: SalesLog,
+    val accounting: Accounting
 ) {
+
+    /**
+     * Starts a new transaction.
+     */
+    fun newTransaction() {
+        register.newTransaction()
+    }
 
     /**
      * Adds an item to the cart if a item with the id exists
@@ -45,7 +46,8 @@ class Controller(
     }
 
     /**
-     * Pays for the items and prints a receipt for the transaction
+     * Ends the current transaction and pays for the items and prints a receipt
+     * for the transaction.
      *
      * @param amount is the amount the customer pays
      * @return a receipt of the transaction

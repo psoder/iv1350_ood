@@ -23,6 +23,7 @@ class View(val controller: Controller) {
     }
 
     fun handleTransaction() {
+        controller.newTransaction()
         while (true) {
             println("\nItem\tPrice\tQty\tVAT\tDiscount")
             println("${transactionList()}\n")

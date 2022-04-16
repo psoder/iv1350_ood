@@ -15,4 +15,11 @@ class SalesLog {
     fun log(receipt: Receipt) {
         sales.add(receipt)
     }
+    
+    /**
+     * Returns the logs as a List
+     */
+    fun getLogs(): List<Receipt> {
+        return sales.toList()
+    }
 }
