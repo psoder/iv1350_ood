@@ -1,7 +1,15 @@
 package integration
 
+/**
+ * Abstraction for a printer
+ */
 class Printer {
 
+    /**
+     * Prints a given receipt to stout
+     * 
+     * @parm the receipt
+     */
     fun print(receipt: Receipt) {
         val items = receipt.items.asIterable().fold("") { acc, items ->
                     val item = items.value.first

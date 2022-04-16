@@ -2,16 +2,23 @@ package model
 
 import integration.*
 
+/**
+ * [Register] is the class that represents a cash register and contains logic
+ * for keeping track of the current transaction and balance.
+ */
 class Register {
+    
     var balance = 0.0
+        private set
+
     var transaction: Transaction? = Transaction()
 
     /**
-     * Finnishes a transaction and increments the registers balance
+     * Finnishes a transaction and increments the registers balance.
      * 
-     * @param amount is the amount the customer pays
-     * @return a receipt of the transaction 
-     * @throws IllegalStateException
+     * @param amount is the amount the customer pays.
+     * @return a receipt of the transaction .
+     * @throws IllegalStateException if there is no current transaction.
     */
     fun pay(amount: Double): Receipt {
         val t: Transaction = transaction ?: throw IllegalStateException("No current transaction")
@@ -26,8 +33,8 @@ class Register {
     /**
      * Adds an item to the current transaction if it exists.
      * 
-     * @param itemId the id of the item to add
-     * @throws IllegalStateException
+     * @param itemId the id of the item to add.
+     * @throws IllegalStateException if there is no current transaction.
      */
     fun enterItem(item: Item) {
         transaction?.addItem(item) ?: throw IllegalStateException("No current transaction")
@@ -37,7 +44,7 @@ class Register {
      * Applies any applicable discounts to the transaction based on the customers id.
      * 
      * @param customerId the customers id.
-     * @throws IllegalStateException
+     * @throws IllegalStateException if there is no current transaction.
      */
     fun applyDiscount(discounts: Map<String, Int>) {
         transaction?.applyDiscount(discounts) ?: throw IllegalStateException("No current transaction")
