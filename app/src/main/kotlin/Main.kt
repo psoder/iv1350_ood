@@ -8,16 +8,13 @@ import view.*
 fun main() {
     // Integration
     val printer = Printer()
-    val itemRegistry = ItemRegistry()
-    val discountRegistry = DiscountRegistry()
+    val itemRegistry = ItemRegistry(listOf("Apple", "Banana", "Kiwi", "Orange", "Grape", "Pear"))
+    val discountRegistry = DiscountRegistry(10)
     val salesLog = SalesLog()
     val accounting = Accounting()
 
-    // Model
-    val register = Register()
-
     // Controller
-    val controller = Controller(register, printer, itemRegistry, discountRegistry, salesLog, accounting)
+    val controller = Controller(printer, itemRegistry, discountRegistry, salesLog, accounting)
 
     // View
     val view = View(controller)

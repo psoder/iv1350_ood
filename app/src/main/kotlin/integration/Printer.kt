@@ -6,18 +6,19 @@ package integration
 class Printer {
 
     /**
-     * Prints a given receipt to stout
+     * Prints a given receipt to stdout
      * 
-     * @parm the receipt
+     * @param the receipt to print
      */
     fun print(receipt: Receipt) {
-        val items = receipt.items.fold("") { acc, (item, disc, qty) ->
-                    acc.plus("${item.name}\t")
-                       .plus("${item.price}\t")
-                       .plus("${qty}\t")
-                       .plus("${item.vat.rate}%\t")
-                       .plus("${disc}%\n")
-                }
+        val items = receipt.items.fold("") {
+                acc, (item, disc, qty) ->
+                acc.plus("${item.name}\t")
+                    .plus("${item.price}\t")
+                    .plus("${qty}\t")
+                    .plus("${item.vat.rate}%\t")
+                    .plus("${disc}%\n")
+            }
 
         println("""
             |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

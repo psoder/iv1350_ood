@@ -38,6 +38,7 @@ dependencies {
 
     // dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.20")
 
+    testImplementation("io.mockk:mockk:1.12.3")
 }
 
 application {
