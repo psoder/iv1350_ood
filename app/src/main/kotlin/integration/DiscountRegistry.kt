@@ -5,16 +5,16 @@ import kotlin.random.*
 /**
  * Handles interaction with the discount database (if there is one).
  */
-class DiscountRegistry {
+class DiscountRegistry() {
 
     // HashMap<customer id, Map<Item id, percent discount>>
     private var discounts = HashMap<String, Map<String, Int>>()
-
+    
     // Populate the discount map with discounts to simulate the diatabase.
-    init {
-        for (id in 1..10) {
+    constructor(no: Int) : this() {
+        for (id in 1..no) {
             val disc = ArrayList<Pair<String, Int>>()
-            for (i in 1..10) {
+            for (i in 1..100) {
                 disc.add(Pair("$i", Random.nextInt(0, 30)))
             }
             discounts.put("$id", disc.toMap())
@@ -31,5 +31,14 @@ class DiscountRegistry {
      */
     fun getDiscount(customerId: String): Map<String, Int>? {
         return discounts[customerId]
+    }
+
+
+    fun addDiscount(customerId: String, discount: Map<String, Int>) {
+        if (discounts[customerId] == null) {
+            discounts.put(customerId, discount)
+        } else {
+            throw IllegalArgumentException("Customer with the id $customerId already exists")
+        }
     }
 }

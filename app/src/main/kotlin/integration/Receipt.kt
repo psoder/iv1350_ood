@@ -10,16 +10,16 @@ import java.time.LocalDateTime
  * @property amountPaid is how much the customer paid.
  */
 data class Receipt(
-    val items: Map<String, Triple<Item, Int, Int>>,
+    val items: List<Triple<Item, Int, Int>>,
     val amountPaid: Double
 ) {
     val time = LocalDateTime.now()
-    val price = items.asIterable().fold(0.0) { acc, (_, v) ->
-        acc + (v.first.price).times((100.0 - v.second) / 100.0).times(v.third)
+    val price = items.fold(0.0) { acc, (item, disc, qty) ->
+        acc + (item.price).times((100.0 - disc) / 100.0).times(qty)
     }
-    val vat = items.asIterable().fold(0.0) { acc, (_, v) ->
-        acc + (v.first.price * v.first.vat.rate / 100)
-            .times((100.0 - v.second) / 100.0)
-            .times(v.third)
+    val vat = items.fold(0.0) { acc, (item, disc, qty) ->
+        acc + (item.price * item.vat.rate / 100)
+            .times((100.0 - disc) / 100.0)
+            .times(qty)
     }
 }

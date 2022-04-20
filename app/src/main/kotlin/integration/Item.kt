@@ -2,7 +2,7 @@ package integration
 
 /**
  * VAT rate.of a product/service.
- * 
+ *
  * @property rate how many percent the rate is.
  */
 enum class VatRate(val rate: Double) {
@@ -13,7 +13,7 @@ enum class VatRate(val rate: Double) {
 }
 
 /**
- * Data class that represents an item.
+ * Class that represents an item.
  *
  * @property id is the id of the product.
  * @property name name of the product.
@@ -25,4 +25,12 @@ data class Item(
     val name: String,
     val price: Double,
     val vat: VatRate = VatRate.LOW,
-) {}
+) {
+    override fun equals(other: Any?): Boolean {
+        return (other is Item) &&
+                id == other.id &&
+                name == other.name &&
+                price == other.price &&
+                vat.rate == other.vat.rate
+    }
+}

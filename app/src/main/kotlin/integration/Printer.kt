@@ -11,13 +11,12 @@ class Printer {
      * @parm the receipt
      */
     fun print(receipt: Receipt) {
-        val items = receipt.items.asIterable().fold("") { acc, items ->
-                    val item = items.value.first
+        val items = receipt.items.fold("") { acc, (item, disc, qty) ->
                     acc.plus("${item.name}\t")
                        .plus("${item.price}\t")
-                       .plus("${items.value.third}\t")
+                       .plus("${qty}\t")
                        .plus("${item.vat.rate}%\t")
-                       .plus("${items.value.second}%\n")
+                       .plus("${disc}%\n")
                 }
 
         println("""
