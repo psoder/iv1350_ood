@@ -1,20 +1,74 @@
 package model
 
+import integration.Item
+import integration.VatRate
 import kotlin.test.*
 
-class TransactionTest{
+class TransactionTest {
 
-    @Test fun `add item updates list`() {}
-    
-    @Test fun `apply discount decreases price`() {}
-    
-    @Test fun `fails if applying negative discount`() {}
-    
-    @Test fun `correct price`() {}
-    
-    @Test fun `correct price if price is negative`() {}
-    
-    @Test fun `correct vat`() {}
-    
-    @Test fun `correct vat if price is negative`() {}
-} 
+    @Test
+    fun `add item updates list`() {
+        val tr = Transaction()
+        val item = Item("1", "a", 10.0)
+        tr.addItem(item)
+
+        assertEquals(tr.items.toList(), listOf(Triple(item, 0, 1)))
+    }
+
+    @Test
+    fun `fails when adding zero or negative quantity`() {
+        val tr = Transaction()
+        val item = Item("1", "a", 10.0)
+        
+        assertFailsWith(IllegalArgumentException::class) { tr.addItem(item, 0) }
+        assertFailsWith(IllegalArgumentException::class) { tr.addItem(item, -1) }
+    }
+
+    @Test
+    fun `apply discount decreases price`() {
+        val tr = Transaction()
+        val item = Item("1", "a", 10.0)
+        val discounts = mapOf("1" to 25)
+        tr.addItem(item)
+
+        val before = tr.price()
+        tr.applyDiscount(discounts)
+        val after = tr.price()
+
+        assertEquals(after, before * 0.75)
+    }
+
+    @Test
+    fun `fails if applying negative discount`() {
+        val tr = Transaction()
+        val item = Item("1", "a", 10.0)
+        val discounts = mapOf("1" to -25)
+        tr.addItem(item)
+
+        assertFailsWith(IllegalArgumentException::class) { tr.applyDiscount(discounts) }
+    }
+
+    @Test fun `correct price`() {
+        val tr = Transaction()
+        val item = Item("1", "a", 10.0)
+        tr.addItem(item)
+
+        assertEquals(tr.price(), 10.0)
+    }
+
+    @Test fun `correct vat`() {
+        val tr = Transaction()
+        val item = Item("1", "a", 10.0, VatRate.LOW)
+        tr.addItem(item)
+
+        assertEquals(tr.vat(), 0.6)
+    }
+
+    @Test fun `correct vat if price is negative`() {
+        val tr = Transaction()
+        val item = Item("1", "a", -10.0, VatRate.LOW)
+        tr.addItem(item)
+
+        assertEquals(tr.vat(),  0.0)
+    }
+}

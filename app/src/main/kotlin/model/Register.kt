@@ -58,7 +58,7 @@ class Register {
     /**
      * Applies any applicable discounts to the transaction based on the customers id.
      *
-     * @param customerId the customers id.
+     * @param discounts are the discounts to apply Map<Iten id, discount>.
      * @throws IllegalStateException if there is no current transaction.
      */
     fun applyDiscount(discounts: Map<String, Int>) {

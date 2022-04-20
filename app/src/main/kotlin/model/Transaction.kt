@@ -2,6 +2,7 @@ package model
 
 import integration.Item
 import integration.Receipt
+import kotlin.math.max
 
 /**
  * [Transaction] is a class that has information about a sale. The difference
@@ -43,6 +44,7 @@ class Transaction {
      */
     fun applyDiscount(discounts: Map<String, Int>) {
         for ((id, discount) in discounts) {
+            require(discount >= 0) {"Can't apply negative discount (was $discount)"}
             val item = items.find { it.first.id.equals(id) } ?: continue
             val copy = item.copy(second = discount)
             items.remove(item)
@@ -71,7 +73,7 @@ class Transaction {
      */
     fun vat(): Double {
         return items.asIterable().fold(0.0) { acc, (item, disc, qty) ->
-            acc + (item.price * item.vat.rate / 100)
+            acc + (max(item.price, 0.0) * item.vat.rate / 100)
                 .times((100.0 - disc) / 100.0)
                 .times(qty)
         }
