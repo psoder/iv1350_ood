@@ -4,11 +4,11 @@ import integration.Item
 import integration.VatRate
 import kotlin.test.*
 
-class TransactionTest {
+class SaleTest {
 
     @Test
     fun `add item updates list`() {
-        val tr = Transaction()
+        val tr = Sale()
         val item = Item("1", "a", 10.0)
         tr.addItem(item)
 
@@ -17,7 +17,7 @@ class TransactionTest {
 
     @Test
     fun `fails when adding zero or negative quantity`() {
-        val tr = Transaction()
+        val tr = Sale()
         val item = Item("1", "a", 10.0)
         
         assertFailsWith(IllegalArgumentException::class) { tr.addItem(item, 0) }
@@ -26,7 +26,7 @@ class TransactionTest {
 
     @Test
     fun `apply discount decreases price`() {
-        val tr = Transaction()
+        val tr = Sale()
         val item = Item("1", "a", 10.0)
         val discounts = mapOf("1" to 25)
         tr.addItem(item)
@@ -40,7 +40,7 @@ class TransactionTest {
 
     @Test
     fun `fails if applying negative discount`() {
-        val tr = Transaction()
+        val tr = Sale()
         val item = Item("1", "a", 10.0)
         val discounts = mapOf("1" to -25)
         tr.addItem(item)
@@ -49,7 +49,7 @@ class TransactionTest {
     }
 
     @Test fun `correct price`() {
-        val tr = Transaction()
+        val tr = Sale()
         val item = Item("1", "a", 10.0)
         tr.addItem(item)
 
@@ -57,7 +57,7 @@ class TransactionTest {
     }
 
     @Test fun `correct vat`() {
-        val tr = Transaction()
+        val tr = Sale()
         val item = Item("1", "a", 10.0, VatRate.LOW)
         tr.addItem(item)
 
@@ -65,7 +65,7 @@ class TransactionTest {
     }
 
     @Test fun `correct vat if price is negative`() {
-        val tr = Transaction()
+        val tr = Sale()
         val item = Item("1", "a", -10.0, VatRate.LOW)
         tr.addItem(item)
 

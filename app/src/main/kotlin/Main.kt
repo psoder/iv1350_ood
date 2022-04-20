@@ -19,5 +19,5 @@ fun main() {
     // View
     val view = View(controller)
 
-    view.handleTransaction()
+    view.handleSale()
 }

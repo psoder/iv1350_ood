@@ -10,7 +10,7 @@ class Accounting {
     /**
      * Logs a reciept in the database of accounts.
      * 
-     * @param receipt is the receipt of a transaction.
+     * @param receipt is the receipt of a sale.
     */
     fun log(receipt: Receipt) {
         receipts.add(receipt)

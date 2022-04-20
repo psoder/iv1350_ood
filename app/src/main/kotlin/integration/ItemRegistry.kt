@@ -1,6 +1,7 @@
 package integration
 
 import kotlin.random.*
+import util.NoSuchServiceException
 
 /** Handles interaction with the products database (if there is one). */
 class ItemRegistry() {
@@ -29,8 +30,10 @@ class ItemRegistry() {
      *
      * @param id the id of the item.
      * @return a nullable item.
+     * @throws NoSuchServiceException if the DB is not running. 
      */
     fun getItem(id: String): Item? {
+        if (id == "db not running") {throw NoSuchServiceException("DB not running")}
         return items.keys.find { item -> item.id.equals(id) }
     }
 

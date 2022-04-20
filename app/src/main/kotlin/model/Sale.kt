@@ -5,10 +5,10 @@ import integration.Receipt
 import kotlin.math.max
 
 /**
- * [Transaction] is a class that has information about a sale. The difference
- * between it and [Receipt] is that [Transaction] is mutable. 
+ * [Sale] is a class that has information about a sale. The difference
+ * between it and [Receipt] is that [Sale] is mutable. 
  */
-class Transaction {
+class Sale {
 
     //  HashMap<Item id, <Item, discount, quantity>>
     val items = ArrayList<Triple<Item, Int, Int>>()
@@ -28,17 +28,17 @@ class Transaction {
     }
 
     /**
-     * Creates a receipt of the transaction.
+     * Creates a receipt of the sale.
      * 
      * @param amountPaid is the amount that was paid
-     * @return a Receipt with transaction info 
+     * @return a Receipt with sale info 
      */
     fun getReceipt(amountPaid: Double): Receipt {
         return Receipt(items.toList(), amountPaid)
     }
 
     /**
-     * Applies discounts to all items in the transaction.
+     * Applies discounts to all items in the sale.
      * 
      * @param discounts is a Map of item ids and the discount to be apply,
      */
