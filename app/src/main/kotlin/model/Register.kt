@@ -16,7 +16,7 @@ class Register {
 
     /**
      * Starts a new transaction.
-     * 
+     *
      * @throws IllegalStateException if there's an active transaction.
      */
     fun newTransaction() {
@@ -42,13 +42,17 @@ class Register {
     }
 
     /**
-     * Adds an item to the current transaction if it exists.
+     * Adds the given number of item to the current transaction if it exists.
      *
      * @param itemId the id of the item to add.
+     * @param quantity is the number of items to add.
      * @throws IllegalStateException if there is no current transaction.
+     * @throws IllegalArgumentException if the quantity is less than one.
      */
-    fun enterItem(item: Item) {
-        transaction?.addItem(item) ?: throw IllegalStateException("No current transaction")
+    fun enterItem(item: Item, quantity: Int = 1) {
+        require(quantity > 0) { "Quantity ($quantity) must add a positive non-zero integer" }
+        transaction?.addItem(item, quantity)
+                ?: throw IllegalStateException("No current transaction")
     }
 
     /**

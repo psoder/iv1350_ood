@@ -10,24 +10,20 @@ import integration.Receipt
 class Transaction {
 
     //  HashMap<Item id, <Item, discount, quantity>>
-    val items = HashMap<String, Triple<Item, Int, Int>>()
+    val items = ArrayList<Triple<Item, Int, Int>>()
 
     /**
-     * Adds an item to the cart.
+     * Adds an item to the cart a given number of times.
      *
      * @param item the item to add.
      * @param discount discount on the item in percent (e.g. 25% is 25).
+     * @throws IllegalArgumentException when quantity is less than one.
      */
-    fun addItem(item: Item) {
-        if (items.containsKey(item.id)) {
-            // Since Triple<> is immutable we have to create a copy qith the
-            // new value
-            val c = items.get(item.id)!!.copy(third = items.get(item.id)!!.third + 1)
-            items.remove(item.id)
-            items.put(item.id, c)
-        } else {
-            items.put(item.id, Triple(item, 0, 1))
-        }
+    fun addItem(item: Item, quantity: Int = 1) {
+        require(quantity > 0) { "Quantity ($quantity) must add a positive non-zero integer" }
+        val it = items.find { it.first.equals(item) } ?: Triple(item, 0, 0)
+        items.remove(it)
+        items.add(it.copy(third = it.third + quantity ))
     }
 
     /**
@@ -37,7 +33,7 @@ class Transaction {
      * @return a Receipt with transaction info 
      */
     fun getReceipt(amountPaid: Double): Receipt {
-        return Receipt(items.toMap(), amountPaid)
+        return Receipt(items.toList(), amountPaid)
     }
 
     /**
@@ -47,11 +43,10 @@ class Transaction {
      */
     fun applyDiscount(discounts: Map<String, Int>) {
         for ((id, discount) in discounts) {
-            // If the item doesnt exist in the list continue
-            val c = items.get(id)?.copy(second = discount) ?: continue
-            // Apply discount
-            items.remove(id)
-            items.put(id, c)
+            val item = items.find { it.first.id.equals(id) } ?: continue
+            val copy = item.copy(second = discount)
+            items.remove(item)
+            items.add(copy)
         }
     }
 
@@ -62,10 +57,10 @@ class Transaction {
      * @return the price of the items.
      */
     fun price(): Double {
-        return items.asIterable().fold(0.0) { acc, (_, v) ->
-            acc + (v.first.price)
-                .times((100.0 - v.second) / 100.0)
-                .times(v.third)
+        return items.fold(0.0) { acc, (item, disc, qty) ->
+            acc + (item.price)
+                .times((100.0 - disc) / 100.0)
+                .times(qty)
         }
     }
 
@@ -75,10 +70,10 @@ class Transaction {
      * @return the amount of VAT.
      */
     fun vat(): Double {
-        return items.asIterable().fold(0.0) { acc, (_, v) ->
-            acc + (v.first.price * v.first.vat.rate / 100)
-                .times((100.0 - v.second) / 100.0)
-                .times(v.third)
+        return items.asIterable().fold(0.0) { acc, (item, disc, qty) ->
+            acc + (item.price * item.vat.rate / 100)
+                .times((100.0 - disc) / 100.0)
+                .times(qty)
         }
     }
 }

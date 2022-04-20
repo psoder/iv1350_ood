@@ -4,14 +4,14 @@ import integration.*
 import model.Register
 
 /** @author Pontus Söderlund */
-class Controller(
-    val register: Register,
-    val printer: Printer,
-    val itemRegistry: ItemRegistry,
-    val discountRegistry: DiscountRegistry,
-    val salesLog: SalesLog,
-    val accounting: Accounting
+class Controller (
+    private val printer: Printer,
+    private val itemRegistry: ItemRegistry,
+    private val discountRegistry: DiscountRegistry,
+    private val salesLog: SalesLog,
+    private val accounting: Accounting
 ) {
+    val register: Register = Register()
 
     /**
      * Starts a new transaction.
@@ -21,17 +21,17 @@ class Controller(
     }
 
     /**
-     * Adds an item to the cart if a item with the id exists
+     * Adds the given number of items to the cart if a item with the id exists
      *
-     * @param ids is a list contianing the item ids
+     * @param id is the item id
+     * @param quantity is how many to add
      */
-    fun enterItem(ids: List<String>) {
-        ids.forEach { id ->
-            val item: Item = itemRegistry.getItem(id)
-                ?: throw NoSuchElementException("No item with id $id exists")
-            register.enterItem(item)
-        }
+    fun enterItem(id: String, quantity: Int = 1) {
+        val item: Item = itemRegistry.getItem(id) 
+            ?: throw NoSuchElementException("No item with id $id exists")
+        register.enterItem(item, quantity)
     }
+    
 
     /**
      * Applies a discount to the customer based on the customers id
