@@ -47,7 +47,7 @@ class Controller (
     fun enterItem(id: String, quantity: Int = 1) {
         try {
             val item: Item = itemRegistry.getItem(id) 
-                ?: throw NoSuchElementException("No item with id $id exists")
+                ?: throw NoSuchElementException("No item with id '$id' exists")
             register.enterItem(item, quantity)
 
         } catch (e: NoSuchElementException) {
@@ -78,7 +78,7 @@ class Controller (
         try {
             val discounts: Map<String, Int> = 
             discountRegistry.getDiscount(customerId)
-                ?: throw NoSuchElementException("No customer with id $customerId exists")
+                ?: throw NoSuchElementException("No customer with id '$customerId' exists")
             register.applyDiscount(discounts)
         } catch (e: NoSuchElementException) {
             logger.log(e)

@@ -8,9 +8,9 @@ import integration.*
  */
 class Register {
 
+    val observers = ArrayList<RegisterObserver>()
     var balance = 0.0
         private set
-
     var sale: Sale? = null
         private set
 
@@ -33,10 +33,11 @@ class Register {
      */
     fun pay(amount: Double): Receipt {
         val s: Sale = sale ?: throw IllegalStateException("No current sale")
-        val price = s.price()
+        val price = s.price() + s.vat()
         require(amount >= price) { "You poor, $amount is less than $price" }
         balance += price
         val receipt = s.getReceipt(amount)
+        notifyObservers()
         sale = null
         return receipt
     }
@@ -65,4 +66,6 @@ class Register {
         sale?.applyDiscount(discounts)
                 ?: throw IllegalStateException("No current sale")
     }
+
+    private fun notifyObservers() = observers.forEach{it.balanceHasChanged(balance)}
 }

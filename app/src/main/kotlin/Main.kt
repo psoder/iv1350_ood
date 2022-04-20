@@ -18,6 +18,10 @@ fun main() {
 
     // View
     val view = View(controller)
+    val revenueFile = TotalRevenueView()
+    val revenueView = TotalRevenueFileOutput()
+    controller.register.observers.add(revenueFile)
+    controller.register.observers.add(revenueView)
 
     view.handleSale()
 }
