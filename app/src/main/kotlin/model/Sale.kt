@@ -14,6 +14,7 @@ class Sale {
     //  HashMap<Item id, <Item, discount, quantity>>
     val items = ArrayList<Triple<Item, Int, Int>>()
     var priceStrategy: PriceStrategy = PriceWithoutVAT
+        set(strategy: PriceStrategy) {field =strategy}
 
     /**
      * Adds an item to the cart a given number of times.
@@ -75,9 +76,5 @@ class Sale {
                 .times((100.0 - disc) / 100.0)
                 .times(qty)
         }
-    }
-
-    fun setPriceStrategy(strategy: PriceStrategy) {
-        priceStrategy = strategy
     }
 }
