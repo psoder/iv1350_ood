@@ -3,6 +3,7 @@ package model
 import integration.Item
 import integration.Receipt
 import kotlin.math.max
+import model.PriceStrategy
 
 /**
  * [Sale] is a class that has information about a sale. The difference
@@ -12,6 +13,7 @@ class Sale {
 
     //  HashMap<Item id, <Item, discount, quantity>>
     val items = ArrayList<Triple<Item, Int, Int>>()
+    var priceStrategy: PriceStrategy = PriceWithoutVAT
 
     /**
      * Adds an item to the cart a given number of times.
@@ -59,11 +61,7 @@ class Sale {
      * @return the price of the items.
      */
     fun price(): Double {
-        return items.fold(0.0) { acc, (item, disc, qty) ->
-            acc + (item.price)
-                .times((100.0 - disc) / 100.0)
-                .times(qty)
-        }
+        return priceStrategy.price(items)
     }
 
     /**
@@ -77,5 +75,9 @@ class Sale {
                 .times((100.0 - disc) / 100.0)
                 .times(qty)
         }
+    }
+
+    fun setPriceStrategy(strategy: PriceStrategy) {
+        priceStrategy = strategy
     }
 }
