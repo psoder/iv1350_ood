@@ -3,7 +3,7 @@ package integration
 /**
  * Responsible for handling interaction with the sales log database 
  */
-class SalesLog {
+object SalesLog {
 
     private val sales = ArrayList<Receipt>()
 
@@ -21,5 +21,12 @@ class SalesLog {
      */
     fun getLogs(): List<Receipt> {
         return sales.toList()
+    }
+
+    /**
+     * Removes all current logs.
+     */
+    fun clear() {
+        sales.clear()
     }
 }

@@ -3,7 +3,7 @@ package integration
 /**
  * Abstraction for a printer
  */
-class Printer {
+object Printer {
 
     /**
      * Prints a given receipt to stdout

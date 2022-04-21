@@ -4,12 +4,24 @@ import kotlin.test.*
 
 class SalesLogTest {
 
+    init {
+    }
+    
+    @BeforeTest
+    fun setup() {
+        SalesLog.log(Receipt(listOf(Triple(Item("0", "a", 1.2), 4, 5)), 6.7))
+    }
+
+    @AfterTest
+    fun tearDown() {
+        ItemRegistry.clear()
+    }
+
     @Test
     fun `logging items adds to log`() {
-        val sl = SalesLog()
-        val rec = Receipt(listOf(Triple(Item("1", "a", 1.23), 0, 2)), 20.0)
-        sl.log(rec)
+        val rec = Receipt(listOf(Triple(Item("1", "b", 9.8), 7, 6)), 5.4)
+        SalesLog.log(rec)
 
-        assertContains(sl.getLogs(), rec)
+        assertContains(SalesLog.getLogs(), rec)
     }
 }

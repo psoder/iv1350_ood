@@ -9,11 +9,11 @@ import util.NoSuchServiceException
 
 /** @author Pontus Söderlund */
 class Controller (
-    private val printer: Printer,
-    private val itemRegistry: ItemRegistry,
-    private val discountRegistry: DiscountRegistry,
-    private val salesLog: SalesLog,
-    private val accounting: Accounting,
+    private val printer: Printer = Printer,
+    private val itemRegistry: ItemRegistry = ItemRegistry,
+    private val discountRegistry: DiscountRegistry = DiscountRegistry,
+    private val salesLog: SalesLog = SalesLog,
+    private val accounting: Accounting = Accounting,
     private val logger: Logger = Logger("controller.log"),
 ) {
     val register: Register = Register()
