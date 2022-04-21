@@ -21,12 +21,13 @@ object DiscountRegistry {
     }
 
 
-    fun addDiscount(customerId: String, discount: Map<String, Int>) {
+    fun addDiscount(customerId: String, discount: Map<String, Int>): DiscountRegistry {
         if (discounts[customerId] == null) {
             discounts.put(customerId, discount)
         } else {
             throw IllegalArgumentException("Customer with the id $customerId already exists")
         }
+        return this
     }
 
     /**

@@ -32,13 +32,14 @@ object ItemRegistry {
      * @param quantity the quantity
      * @throws IllegalArgumentException if an item with the given id allready exists.
      */
-    fun addItem(item: Item, quantity: Int) {
+    fun addItem(item: Item, quantity: Int): ItemRegistry {
         require(quantity >= 0) { "Quantity must be 0 or more (was $quantity)" }
         if (items[item] == null) {
             items.put(item, quantity)
         } else {
             throw IllegalArgumentException("An item with id '${item.id}' allready exists")
         }
+        return this
     }
 
     /**
