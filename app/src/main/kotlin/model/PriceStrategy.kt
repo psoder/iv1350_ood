@@ -10,11 +10,10 @@ interface PriceStrategy {
     /**
      * Returns the price of the items in the list.
      * 
-     * @param items is the list of the items that were sold and the quantity and discount.
-     * List<Triple<Item, Discount, Quantity>>.
+     * @param items is the list of the items that were sold as well as the quantity and discount.
      * @return the price of the items.
      */
-    fun price(items: List<Triple<Item, Int, Int>>): Double
+    fun price(items: List<SaleItem>): Double
 }
 
 /**
@@ -25,11 +24,10 @@ object PriceWithoutVAT : PriceStrategy {
     /**
      * Calculates the price for the given list excluding VAT.
      *
-     * @param items is the list of the items that were sold and the quantity and discount.
-     * List<Triple<Item, Discount, Quantity>>.
+     * @param items is the list of the items that were sold as well as the quantity and discount.
      * @return the price of the items.
      */
-    override fun price(items: List<Triple<Item, Int, Int>>): Double {
+    override fun price(items: List<SaleItem>): Double {
         return items.fold(0.0) { acc, (item, disc, qty) ->
             acc + max(item.price, 0.0)
                 .times((100.0 - disc) / 100.0)
@@ -46,11 +44,10 @@ object PriceWithVAT : PriceStrategy {
     /**
      * Calculates the price for the given list inluding VAT.
      * 
-     * @param items is the list of the items that were sold and the quantity
-     * and discount. List<Triple<Item, Discount, Quantity>>.
+     * @param items is the list of the items that were sold as well as the quantity and discount.
      * @return the price of the items.
      */
-    override fun price(items: List<Triple<Item, Int, Int>>): Double {
+    override fun price(items: List<SaleItem>): Double {
         return items.fold(0.0) { acc, (item, disc, qty) ->
             acc + max(item.price, 0.0)
                 .times(1 + item.vat.rate / 100)

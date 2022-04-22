@@ -10,7 +10,7 @@ class SaleTest {
         val item = Item("1", "a", 10.0)
         tr.addItem(item)
 
-        assertEquals(tr.items.toList(), listOf(Triple(item, 0, 1)))
+        assertEquals(tr.items.toList(), listOf(SaleItem(item, 0, 1)))
     }
 
     @Test

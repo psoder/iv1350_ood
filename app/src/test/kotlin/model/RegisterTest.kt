@@ -42,7 +42,7 @@ class RegisterTest {
         reg.newSale()
         val item = Item("1", "a", 10.0)
         reg.enterItem(item)
-        val expected = listOf(Triple(item, 0, 1))
+        val expected = listOf(SaleItem(item, 0, 1))
         val actual = reg.sale?.items?.toList()
         assertEquals(expected, actual)
     }

@@ -3,6 +3,7 @@ package controller
 import integration.*
 import model.Item
 import model.Receipt
+import model.SaleItem
 import kotlin.test.*
 import util.Logger
 
@@ -56,7 +57,7 @@ class ControllerTest {
         controller.enterItem("0")
 
         val actual = controller.pay(100.0)
-        val expected = Receipt(listOf(Triple(Item("0", "Apple", 12.1), 0, 1)), 100.0)
+        val expected = Receipt(listOf(SaleItem(Item("0", "Apple", 12.1), 0, 1)), 100.0)
         assertEquals(expected, actual)
     }
 

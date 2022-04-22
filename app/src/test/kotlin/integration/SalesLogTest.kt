@@ -3,6 +3,7 @@ package integration
 import kotlin.test.*
 import model.Item
 import model.Receipt
+import model.SaleItem
 
 class SalesLogTest {
 
@@ -11,7 +12,7 @@ class SalesLogTest {
     
     @BeforeTest
     fun setup() {
-        SalesLog.log(Receipt(listOf(Triple(Item("0", "a", 1.2), 4, 5)), 6.7))
+        SalesLog.log(Receipt(listOf(SaleItem(Item("0", "a", 1.2), 4, 5)), 6.7))
     }
 
     @AfterTest
@@ -21,7 +22,7 @@ class SalesLogTest {
 
     @Test
     fun `logging items adds to log`() {
-        val rec = Receipt(listOf(Triple(Item("1", "b", 9.8), 7, 6)), 5.4)
+        val rec = Receipt(listOf(SaleItem(Item("1", "b", 9.8), 7, 6)), 5.4)
         SalesLog.log(rec)
 
         assertContains(SalesLog.getLogs(), rec)

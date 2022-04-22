@@ -8,10 +8,9 @@ import kotlin.math.max
  */
 class Sale {
 
-    //  HashMap<Item id, <Item, discount, quantity>>
-    val items = ArrayList<Triple<Item, Int, Int>>()
+    val items = ArrayList<SaleItem>()
     var priceStrategy: PriceStrategy = PriceWithoutVAT
-        set(strategy: PriceStrategy) {field =strategy}
+        set(strategy: PriceStrategy) {field = strategy}
 
     /**
      * Adds an item to the cart a given number of times.
@@ -22,9 +21,9 @@ class Sale {
      */
     fun addItem(item: Item, quantity: Int = 1) {
         require(quantity > 0) { "Quantity ($quantity) must add a positive non-zero integer" }
-        val it = items.find { it.first.equals(item) } ?: Triple(item, 0, 0)
+        val it = items.find { it.item.equals(item) } ?: SaleItem(item, 0, 0)
         items.remove(it)
-        items.add(it.copy(third = it.third + quantity ))
+        items.add(it.copy(quantity = it.quantity + quantity ))
     }
 
     /**
@@ -45,8 +44,8 @@ class Sale {
     fun applyDiscount(discounts: Map<String, Int>) {
         for ((id, discount) in discounts) {
             require(discount >= 0) {"Can't apply negative discount (was $discount)"}
-            val item = items.find { it.first.id.equals(id) } ?: continue
-            val copy = item.copy(second = discount)
+            val item = items.find { it.item.id.equals(id) } ?: continue
+            val copy = item.copy(discount = discount)
             items.remove(item)
             items.add(copy)
         }
