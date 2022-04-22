@@ -1,5 +1,6 @@
 package integration
 
+import model.Receipt
 /**
  * Abstraction for a printer
  */

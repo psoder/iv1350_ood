@@ -1,6 +1,8 @@
 package integration
 
 import kotlin.test.*
+import model.Item
+import model.Receipt
 
 class SalesLogTest {
 

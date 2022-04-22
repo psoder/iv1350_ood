@@ -1,5 +1,7 @@
 package integration
 
+import model.Receipt
+
 /** Responsible for handling interaction with the accounting system. */
 object Accounting {
 

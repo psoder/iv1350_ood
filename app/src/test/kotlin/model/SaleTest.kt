@@ -1,7 +1,5 @@
 package model
 
-import integration.Item
-import integration.VatRate
 import kotlin.test.*
 
 class SaleTest {

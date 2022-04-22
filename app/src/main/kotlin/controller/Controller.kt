@@ -2,6 +2,8 @@ package controller
 
 import integration.*
 import model.Register
+import model.Item
+import model.Receipt
 import java.io.File
 import java.io.PrintWriter
 import util.Logger

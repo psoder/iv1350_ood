@@ -1,4 +1,4 @@
-package integration
+package model
 
 import java.time.LocalDateTime
 

@@ -1,9 +1,6 @@
 package model
 
-import integration.Item
-import integration.Receipt
 import kotlin.math.max
-import model.PriceStrategy
 
 /**
  * [Sale] is a class that has information about a sale. The difference

@@ -1,5 +1,6 @@
 package integration
 
+import model.Receipt
 /**
  * Responsible for handling interaction with the sales log database 
  */

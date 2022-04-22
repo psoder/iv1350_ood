@@ -1,6 +1,7 @@
 package integration
 
 import kotlin.test.*
+import model.Item
 
 class ItemRegistryTest {
 

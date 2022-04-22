@@ -2,7 +2,7 @@ package integration
 
 import kotlin.random.*
 import util.NoSuchServiceException
-
+import model.Item
 /**
  * Handles interaction with the products database (if there is one).
 */

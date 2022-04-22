@@ -1,6 +1,8 @@
 package controller
 
 import integration.*
+import model.Item
+import model.Receipt
 import kotlin.test.*
 import util.Logger
 

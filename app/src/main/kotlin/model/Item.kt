@@ -1,4 +1,4 @@
-package integration
+package model
 
 /**
  * VAT rate.of a product/service.
