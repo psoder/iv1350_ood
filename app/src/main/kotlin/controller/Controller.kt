@@ -7,7 +7,16 @@ import java.io.PrintWriter
 import util.Logger
 import util.NoSuchServiceException
 
-/** @author Pontus Söderlund */
+/**
+ * Respinsible for coordinating interaction between views and the rest of the system. 
+ * 
+ * @param printer the printer to use.
+ * @param itemRegistry the item registry to use.
+ * @param discountRegistry the discount registry to use.
+ * @param salesLog the place sales should be logged to.
+ * @param accounting the accounting system to use.
+ * @param logger the logger to use.
+ */
 class Controller (
     private val printer: Printer = Printer,
     private val itemRegistry: ItemRegistry = ItemRegistry,

@@ -43,6 +43,8 @@ gradlew.bat test
     are declared with `=`. A sum function `fun sum(a: Int, b: Int = 0): Int` where
     `b` is `0` by default and the return type is `Int`.
 
+- Named arguments can be used to make it easier to read  
+
 - `val` declares an immutable variable, comparable to `final` in Java.
 
 - `var` declares a variable and infers it's value. If the value can't be infered
@@ -66,6 +68,12 @@ gradlew.bat test
 
 - Exceptions are unchecked, i.e. you have to explicitly catch them and don't
     have to surround all method calls to exception throwing methods with a try-catch.
+
+- Singletons are declared with the `object` keyword. E.g. a singleton would be
+    defined with `object Singleton{}`.
+
+- When using lambda expressions instead of writing `list.forEach(item -> println(item))`
+    `it` can be used to refer to the current element simplifying to `list.forEach(println(it))`.
 
 ### Other good-to-know things
 

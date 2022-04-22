@@ -56,8 +56,7 @@ class Sale {
     }
 
     /**
-     * Returns the price of the items in the cart, excluding VAT but including
-     * discounts.
+     * Returns the price of the items in the cart using the selected strategy.
      *
      * @return the price of the items.
      */

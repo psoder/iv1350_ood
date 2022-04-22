@@ -28,8 +28,8 @@ object ItemRegistry {
     /**
      * Adds an item into the inventory system.
      *
-     * @param item the item to add
-     * @param quantity the quantity
+     * @param item the item to add.
+     * @param quantity the quantity.
      * @throws IllegalArgumentException if an item with the given id allready exists.
      */
     fun addItem(item: Item, quantity: Int): ItemRegistry {
@@ -49,10 +49,7 @@ object ItemRegistry {
      * @return true if the item was removed, otherwise false.
      */
     fun removeItem(id: String): Boolean {
-        if (items.remove(getItem(id)) != null) {
-            return true
-        }
-        return false
+        return items.remove(getItem(id)) != null
     }
 
     /**

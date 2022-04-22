@@ -8,9 +8,11 @@ import integration.*
  */
 class Register {
 
-    val observers = ArrayList<RegisterObserver>()
+    private val observers = ArrayList<RegisterObserver>()
+    
     var balance = 0.0
         private set
+
     var sale: Sale? = null
         private set
 
@@ -67,5 +69,16 @@ class Register {
                 ?: throw IllegalStateException("No current sale")
     }
 
+    /**
+     * Adds an [RegisterObserver] to the observers. The observer is notified when the state changes.
+     * 
+     * @param obs is an object that implements the [RegisterObserver] interface.
+     * @return The object the method was called on. 
+     */
+    fun addObserver(obs: RegisterObserver): Register {
+        observers.add(obs)
+        return this
+    }
+    
     private fun notifyObservers() = observers.forEach{it.balanceHasChanged(balance)}
 }

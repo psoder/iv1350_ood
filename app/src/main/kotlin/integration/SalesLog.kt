@@ -17,7 +17,9 @@ object SalesLog {
     }
     
     /**
-     * Returns the logs as a List
+     * Returns the logs as a list.
+     * 
+     * @return a list of all [Receipts] in the DB.
      */
     fun getLogs(): List<Receipt> {
         return sales.toList()

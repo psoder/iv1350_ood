@@ -6,7 +6,7 @@ package integration
 object Printer {
 
     /**
-     * Prints a given receipt to stdout
+     * Prints a given receipt to standard out.
      * 
      * @param the receipt to print
      */

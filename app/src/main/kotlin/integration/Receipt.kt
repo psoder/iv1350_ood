@@ -5,9 +5,9 @@ import java.time.LocalDateTime
 /**
  * Responsible for storing information about a sale. Immutable.
  * 
- * @property items is a Map where the key is the item id and the value is 
+ * @param items is a Map where the key is the item id and the value is 
  * Triple<Item, Discount as a percentage e.g. 25%, Quantity>.
- * @property amountPaid is how much the customer paid.
+ * @param amountPaid is how much the customer paid.
  */
 data class Receipt(
     val items: List<Triple<Item, Int, Int>>,
