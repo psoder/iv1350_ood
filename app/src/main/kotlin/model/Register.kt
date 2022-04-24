@@ -36,7 +36,7 @@ class Register {
     fun pay(amount: Double): Receipt {
         val s: Sale = sale ?: throw IllegalStateException("No current sale")
         val price = s.price() + s.vat()
-        require(amount >= price) { "You poor, $amount is less than $price" }
+        require(amount >= price) { "You're poor, ${"%.2f".format(amount)} is less than ${"%.2f".format(price)}" }
         balance += price
         val receipt = s.getReceipt(amount)
         notifyObservers()

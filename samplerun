@@ -1,0 +1,151 @@
+1. New Sale
+2. Exit
+1
+
+Item	Price	Qty	VAT	Discount
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Enter item
+2. Apply discount
+3. Finnish sale
+1
+
+Enter item ID: (id [quantity])
+0
+
+Item	Price	Qty	VAT	Discount
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Apple	5.88	1	12.0%	0%
+----------------------------------------
+Total:	6.59 (of which 0.71 is VAT)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Enter item
+2. Apply discount
+3. Finnish sale
+1
+
+Enter item ID: (id [quantity])
+1 3
+
+Item	Price	Qty	VAT	Discount
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Apple	5.88	1	12.0%	0%
+Banana	18.19	3	12.0%	0%
+----------------------------------------
+Total:	67.70 (of which 7.25 is VAT)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Enter item
+2. Apply discount
+3. Finnish sale
+1
+
+Enter item ID: (id [quantity])
+-1
+No item with id '-1' exists
+
+Item	Price	Qty	VAT	Discount
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Apple	5.88	1	12.0%	0%
+Banana	18.19	3	12.0%	0%
+----------------------------------------
+Total:	67.70 (of which 7.25 is VAT)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Enter item
+2. Apply discount
+3. Finnish sale
+1
+
+Enter item ID: (id [quantity])
+nodb
+One of the services is not working.
+
+Item	Price	Qty	VAT	Discount
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Apple	5.88	1	12.0%	0%
+Banana	18.19	3	12.0%	0%
+----------------------------------------
+Total:	67.70 (of which 7.25 is VAT)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Enter item
+2. Apply discount
+3. Finnish sale
+2
+
+Enter customer ID: (id)
+1
+
+Item	Price	Qty	VAT	Discount
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Apple	5.88	1	12.0%	0%
+Banana	18.19	3	12.0%	21%
+----------------------------------------
+Total:	54.87 (of which 5.88 is VAT)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Enter item
+2. Apply discount
+3. Finnish sale
+2
+
+Enter customer ID: (id)
+-1
+No customer with id '-1' exists
+
+Item	Price	Qty	VAT	Discount
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Apple	5.88	1	12.0%	0%
+Banana	18.19	3	12.0%	21%
+----------------------------------------
+Total:	54.87 (of which 5.88 is VAT)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Enter item
+2. Apply discount
+3. Finnish sale
+3
+
+Enter amount paid: (amount)
+10
+You're poor, 10.00 is less than 60.75
+
+Item	Price	Qty	VAT	Discount
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Apple	5.88	1	12.0%	0%
+Banana	18.19	3	12.0%	21%
+----------------------------------------
+Total:	54.87 (of which 5.88 is VAT)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Enter item
+2. Apply discount
+3. Finnish sale
+3
+
+Enter amount paid: (amount)
+100
+########################
+TRV: Balance: 60.75
+########################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Time:   2022-04-24T20:31:34.253684875
+-----------------------------------------
+Item:   Price:  Qty:    VAT:    Discount:
+-----------------------------------------
+Apple	5.88	1	12.0%	0%
+Banana	18.19	3	12.0%	21%
+Total:  54.87
+-----------------------------------------
+Price:  54.87
+VAT:    5.88
+Paid:   100.00
+Change: 45.13
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Register Balance: 60.75
+1. New Sale
+2. Exit
+2

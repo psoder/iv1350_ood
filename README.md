@@ -17,20 +17,20 @@ The tests are located in [app/src/test/kotlin](app/src/test/kotlin).
 
 ```sh
 # To run
-./gradlew run
+./gradlew --console=plain run
 
 # To test
 ./gradlew test
 
 # To test and run 
-./gradlew test && ./gradlew run
+./gradlew test && ./gradlew --console=plain run
 ```
 
 #### On Windows
 
 ```bat
 # To run
-gradlew.bat run
+gradlew.bat --console=plain run
 
 # To test
 gradlew.bat test

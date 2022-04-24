@@ -3,6 +3,7 @@ package view
 import controller.Controller
 import kotlin.system.exitProcess
 import model.Sale
+import model.PriceWithVAT
 
 class View(val controller: Controller) {
 
@@ -11,20 +12,27 @@ class View(val controller: Controller) {
     fun saleList(): String {
         val sale: Sale = controller.register.sale
             ?: throw IllegalStateException("No current sale")
-        return sale.items
-                .fold("") { acc, (item, disc, qty) ->
+        
+        sale.priceStrategy = PriceWithVAT
+
+        if (sale.items.any()) {
+            return sale.items.fold("") { acc, (item, disc, qty) ->
                     acc.plus("${item.name}\t")
                             .plus("${item.price}\t")
                             .plus("${qty}\t")
                             .plus("${item.vat.rate}%\t")
                             .plus("${disc}%$eol")
                 }
-                .plus("Total:\t${"%.2f".format(sale.price())}")
+                .plus("----------------------------------------$eol")
+                .plus("Total:\t${"%.2f".format(sale.price())} (of which ${"%.2f".format(sale.vat())} is VAT)$eol")
+                .plus("")
+        }
+        return ""
     }
 
     fun handleSale() {
         while (true) {
-            println("Register Balance: ${controller.register.balance}")
+            println("Register Balance: ${"%.2f".format(controller.register.balance)}")
 
             println("1. New Sale")
             println("2. Exit")
@@ -34,7 +42,9 @@ class View(val controller: Controller) {
                     controller.newSale()
                     while (true) {
                         println("${eol}Item\tPrice\tQty\tVAT\tDiscount")
-                        println("${saleList()}$eol")
+                        println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                        print("${saleList()}")
+                        println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~$eol")
 
                         println("1. Enter item")
                         println("2. Apply discount")
@@ -42,7 +52,7 @@ class View(val controller: Controller) {
 
                         when (readLine()!!) {
                             "1" -> {
-                                println("${eol}Enter item ID")
+                                println("${eol}Enter item ID: (id [quantity])")
                                 try {
                                     val input = readLine()!!.split(" ")
                                     val qty = input.getOrNull(1)?.toInt() ?: 1
@@ -52,7 +62,7 @@ class View(val controller: Controller) {
                                 }
                             }
                             "2" -> {
-                                println("${eol}Enter customer ID")
+                                println("${eol}Enter customer ID: (id)")
                                 try {
                                     controller.applyDiscount(readLine()!!)
                                 } catch (e: Exception) {
@@ -60,7 +70,7 @@ class View(val controller: Controller) {
                                 }
                             }
                             "3" -> {
-                                println("${eol}Enter amount paid")
+                                println("${eol}Enter amount paid: (amount)")
                                 try {
                                     controller.pay(readLine()!!.toDouble())
                                 } catch (e: Exception) {

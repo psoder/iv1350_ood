@@ -11,7 +11,7 @@ class RegisterTest {
         val item = Item("1", "a", 10.0)
         reg.enterItem(item)
         reg.pay(100.0)
-        assertEquals(reg.balance, 10.6)
+        assertEquals(reg.balance, 11.2)
     }
 
     @Test
