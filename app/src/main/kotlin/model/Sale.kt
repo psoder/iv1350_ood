@@ -40,6 +40,7 @@ class Sale {
      * Applies discounts to all items in the sale.
      * 
      * @param discounts is a Map of item ids and the discount to be apply,
+     * @throws IllegalArgumentException if the discount is negative.
      */
     fun applyDiscount(discounts: Map<String, Int>) {
         for ((id, discount) in discounts) {

@@ -24,14 +24,15 @@ class SaleTest {
 
     @Test
     fun `apply discount decreases price`() {
-        val tr = Sale()
+        val s = Sale()
         val item = Item("1", "a", 10.0)
         val discounts = mapOf("1" to 25)
-        tr.addItem(item)
-
-        val before = tr.price()
-        tr.applyDiscount(discounts)
-        val after = tr.price()
+        s.addItem(item)
+        
+        s.priceStrategy = PriceWithoutVAT
+        val before = s.price()
+        s.applyDiscount(discounts)
+        val after = s.price()
 
         assertEquals(after, before * 0.75)
     }

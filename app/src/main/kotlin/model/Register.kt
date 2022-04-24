@@ -32,11 +32,14 @@ class Register {
      * @param amount is the amount the customer pays.
      * @return a receipt of the sale.
      * @throws IllegalStateException if there is no current sale.
+     * @throws IllegalArgumentException if the amount paid is less than the price.
      */
     fun pay(amount: Double): Receipt {
         val s: Sale = sale ?: throw IllegalStateException("No current sale")
-        val price = s.price() + s.vat()
+        s.priceStrategy = PriceWithVAT
+        val price = s.price()
         require(amount >= price) { "You're poor, ${"%.2f".format(amount)} is less than ${"%.2f".format(price)}" }
+
         balance += price
         val receipt = s.getReceipt(amount)
         notifyObservers()
@@ -63,6 +66,7 @@ class Register {
      *
      * @param discounts are the discounts to apply Map<Iten id, discount>.
      * @throws IllegalStateException if there is no current sale.
+     * @throws IllegalArgumentException if the discount is negative.
      */
     fun applyDiscount(discounts: Map<String, Int>) {
         sale?.applyDiscount(discounts)

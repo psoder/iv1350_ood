@@ -30,7 +30,8 @@ object ItemRegistry {
      *
      * @param item the item to add.
      * @param quantity the quantity.
-     * @throws IllegalArgumentException if an item with the given id allready exists.
+     * @throws IllegalArgumentException if an item with the given id allready 
+     * exists or the quantity is negative.
      */
     fun addItem(item: Item, quantity: Int): ItemRegistry {
         require(quantity >= 0) { "Quantity must be 0 or more (was $quantity)" }

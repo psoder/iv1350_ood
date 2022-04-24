@@ -50,38 +50,30 @@ class View(val controller: Controller) {
                         println("2. Apply discount")
                         println("3. Finnish sale")
 
-                        when (readLine()!!) {
-                            "1" -> {
-                                println("${eol}Enter item ID: (id [quantity])")
-                                try {
+                        try {
+                            when (readLine()!!) {
+                                "1" -> {
+                                    println("${eol}Enter item ID: (id [quantity])")
+                                    // Hacky way to get the input for both parameters. It's good enough.
                                     val input = readLine()!!.split(" ")
                                     val qty = input.getOrNull(1)?.toInt() ?: 1
                                     controller.enterItem(input[0], qty)
-                                } catch (e: Exception) {
-                                    println(e.message)
                                 }
-                            }
-                            "2" -> {
-                                println("${eol}Enter customer ID: (id)")
-                                try {
+                                "2" -> {
+                                    println("${eol}Enter customer ID: (id)")
                                     controller.applyDiscount(readLine()!!)
-                                } catch (e: Exception) {
-                                    println(e.message)
                                 }
-                            }
-                            "3" -> {
-                                println("${eol}Enter amount paid: (amount)")
-                                try {
+                                "3" -> {
+                                    println("${eol}Enter amount paid: (amount)")
                                     controller.pay(readLine()!!.toDouble())
-                                } catch (e: Exception) {
-                                    println(e.message)
-                                    continue
+                                    break
                                 }
-                                break
+                                else -> {
+                                    println("Not a valid input")
+                                }
                             }
-                            else -> {
-                                println("Not a valid input")
-                            }
+                        } catch (e: Exception) {
+                            println(e.message)
                         }
                     }
                 }

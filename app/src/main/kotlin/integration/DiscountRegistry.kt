@@ -1,5 +1,7 @@
 package integration
 
+import util.NoSuchServiceException
+
 /**
  * Handles interaction with the discount database (if there is one).
  */
@@ -14,8 +16,10 @@ object DiscountRegistry {
      *
      * @param customerId is the id of the customer.
      * @return a nullable map where the key is the item id and the value is the discount.
+     * @throws NoSuchServiceException if the service isn't running.
      */
     fun getDiscount(customerId: String): Map<String, Int>? {
+        if (customerId.equals("nodb")) {throw NoSuchServiceException("Discont database not available.")}
         return discounts[customerId]
     }
 

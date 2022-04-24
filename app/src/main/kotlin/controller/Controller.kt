@@ -84,6 +84,7 @@ class Controller (
      * @param customerId is the id of the customer.
      * @throws NoSuchElementException when there's no customer with the specified id.
      * @throws IllegalStateException if there is no current sale.
+     * @throws IllegalArgumentException if the discount is negative.
      */
     fun applyDiscount(customerId: String) {
         try {
