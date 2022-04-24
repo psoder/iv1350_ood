@@ -6,6 +6,8 @@ import model.Sale
 
 class View(val controller: Controller) {
 
+    private val eol: String = System.getProperty("line.separator")
+
     fun saleList(): String {
         val sale: Sale = controller.register.sale
             ?: throw IllegalStateException("No current sale")
@@ -15,7 +17,7 @@ class View(val controller: Controller) {
                             .plus("${item.price}\t")
                             .plus("${qty}\t")
                             .plus("${item.vat.rate}%\t")
-                            .plus("${disc}%\n")
+                            .plus("${disc}%$eol")
                 }
                 .plus("Total:\t${"%.2f".format(sale.price())}")
     }
@@ -31,8 +33,8 @@ class View(val controller: Controller) {
                 "1" -> {
                     controller.newSale()
                     while (true) {
-                        println("\nItem\tPrice\tQty\tVAT\tDiscount")
-                        println("${saleList()}\n")
+                        println("${eol}Item\tPrice\tQty\tVAT\tDiscount")
+                        println("${saleList()}$eol")
 
                         println("1. Enter item")
                         println("2. Apply discount")
@@ -40,7 +42,7 @@ class View(val controller: Controller) {
 
                         when (readLine()!!) {
                             "1" -> {
-                                println("\nEnter item ID")
+                                println("${eol}Enter item ID")
                                 try {
                                     val input = readLine()!!.split(" ")
                                     val qty = input.getOrNull(1)?.toInt() ?: 1
@@ -50,7 +52,7 @@ class View(val controller: Controller) {
                                 }
                             }
                             "2" -> {
-                                println("\nEnter customer ID")
+                                println("${eol}Enter customer ID")
                                 try {
                                     controller.applyDiscount(readLine()!!)
                                 } catch (e: Exception) {
@@ -58,7 +60,7 @@ class View(val controller: Controller) {
                                 }
                             }
                             "3" -> {
-                                println("\nEnter amount paid")
+                                println("${eol}Enter amount paid")
                                 try {
                                     controller.pay(readLine()!!.toDouble())
                                 } catch (e: Exception) {

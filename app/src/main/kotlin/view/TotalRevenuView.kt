@@ -5,7 +5,9 @@ import model.RegisterObserver
 class TotalRevenueView : RegisterObserver {
 
     override fun balanceHasChanged(newBalance: Double) {
-        println("Balance: $newBalance")
+        println("---------------------")
+        println("TRV: Balance: $newBalance")
+        println("---------------------")
     }
 
     override fun doShowTotalIncome() {

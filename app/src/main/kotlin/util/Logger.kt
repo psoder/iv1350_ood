@@ -11,6 +11,8 @@ import java.time.LocalDateTime
  */
 class Logger(val filePath: String, val quiet: Boolean = false) {
 
+    private val eol: String = System.getProperty("line.separator")
+
     /**
      * Logs the text.
      * 
@@ -18,12 +20,12 @@ class Logger(val filePath: String, val quiet: Boolean = false) {
      */
     fun log(text: String) {
         if (!quiet) {
-            File(filePath).appendText("${LocalDateTime.now()}\n$text\n\n")
+            File(filePath).appendText("${LocalDateTime.now()}$eol$text$eol$eol")
         }
     }
 
     /**
      * Logs an exception.
      */
-    fun log(e: Exception) = log("${e.message}\n${e.stackTraceToString()}")
+    fun log(e: Exception) = log("$eol${e.stackTraceToString()}")
 }

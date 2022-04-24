@@ -6,6 +6,8 @@ import model.Receipt
  */
 object Printer {
 
+    private val eol: String = System.getProperty("line.separator")
+
     /**
      * Prints a given receipt to standard out.
      * 
@@ -18,7 +20,7 @@ object Printer {
                     .plus("${item.price}\t")
                     .plus("${qty}\t")
                     .plus("${item.vat.rate}%\t")
-                    .plus("${disc}%\n")
+                    .plus("${disc}%$eol")
             }
 
         println("""
