@@ -84,5 +84,5 @@ class Register {
         return this
     }
     
-    private fun notifyObservers() = observers.forEach{it.balanceHasChanged(balance)}
+    private fun notifyObservers() = observers.forEach{it.newSaleWasMade(balance)}
 }
