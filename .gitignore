@@ -337,3 +337,4 @@ TSWLatexianTemp*
 build
 balance
 /app/bin
+!gradle/wrapper/gradle-wrapper.jar
