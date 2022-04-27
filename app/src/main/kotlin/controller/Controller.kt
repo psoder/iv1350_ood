@@ -20,11 +20,11 @@ import util.NoSuchServiceException
  * @param logger the logger to use.
  */
 class Controller (
-    private val printer: Printer = Printer,
-    private val itemRegistry: ItemRegistry = ItemRegistry,
-    private val discountRegistry: DiscountRegistry = DiscountRegistry,
-    private val salesLog: SalesLog = SalesLog,
-    private val accounting: Accounting = Accounting,
+    private val printer: Printer = Printer(),
+    private val itemRegistry: ItemRegistry = ItemRegistry(),
+    private val discountRegistry: DiscountRegistry = DiscountRegistry(),
+    private val salesLog: SalesLog = SalesLog(),
+    private val accounting: Accounting = Accounting(),
     private val logger: Logger = Logger("controller.log"),
 ) {
     val register: Register = Register()

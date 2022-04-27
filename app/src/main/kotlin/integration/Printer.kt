@@ -2,8 +2,10 @@ package integration
 
 import model.Receipt
 
-/** Abstraction for a printer */
-object Printer {
+/**
+ * Abstraction for a printer
+ */
+class Printer {
 
     private val eol: String = System.getProperty("line.separator")
 

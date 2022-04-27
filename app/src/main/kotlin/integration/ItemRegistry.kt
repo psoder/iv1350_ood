@@ -4,8 +4,10 @@ import kotlin.random.*
 import model.Item
 import util.NoSuchServiceException
 
-/** Handles interaction with the products database (if there is one). */
-object ItemRegistry {
+/**
+ * Handles interaction with the products database (if there is one).
+ */
+class ItemRegistry {
 
     // HashMap<Item id, Pair<Item, quantity>>
     private var items: MutableMap<Item, Int> = mutableMapOf()

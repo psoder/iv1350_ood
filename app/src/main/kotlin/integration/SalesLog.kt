@@ -2,8 +2,10 @@ package integration
 
 import model.Receipt
 
-/** Responsible for handling interaction with the sales log database */
-object SalesLog {
+/**
+ * Responsible for handling interaction with the sales log database
+ */
+class SalesLog {
 
     private val sales = ArrayList<Receipt>()
 

@@ -5,7 +5,7 @@ import util.NoSuchServiceException
 /**
  * Handles interaction with the discount database (if there is one).
  */
-object DiscountRegistry {
+class DiscountRegistry {
 
     // HashMap<customer id, Map<Item id, percent discount>>
     private var discounts = HashMap<String, MutableMap<String, Int>>()
