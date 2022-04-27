@@ -1,11 +1,10 @@
 package integration
 
 import kotlin.random.*
-import util.NoSuchServiceException
 import model.Item
-/**
- * Handles interaction with the products database (if there is one).
-*/
+import util.NoSuchServiceException
+
+/** Handles interaction with the products database (if there is one). */
 object ItemRegistry {
 
     // HashMap<Item id, Pair<Item, quantity>>
@@ -30,8 +29,8 @@ object ItemRegistry {
      *
      * @param item the item to add.
      * @param quantity the quantity.
-     * @throws IllegalArgumentException if an item with the given id allready 
-     * exists or the quantity is negative.
+     * @throws IllegalArgumentException if an item with the given id allready exists or the quantity
+     * is negative.
      */
     fun addItem(item: Item, quantity: Int): ItemRegistry {
         require(quantity >= 0) { "Quantity must be 0 or more (was $quantity)" }
@@ -45,7 +44,7 @@ object ItemRegistry {
 
     /**
      * Removes an item with the given id if it is in the item registry.file
-     * 
+     *
      * @param id is the of the item.
      * @return true if the item was removed, otherwise false.
      */
@@ -64,12 +63,5 @@ object ItemRegistry {
             val change = changes[item.id] ?: 0
             items.set(item, value + change)
         }
-    }
-
-    /**
-     * Removes all items from the item registry.
-     */
-    fun clear() {
-        items.clear()
     }
 }

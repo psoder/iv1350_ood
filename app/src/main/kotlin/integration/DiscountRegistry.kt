@@ -32,15 +32,9 @@ object DiscountRegistry {
      * @param discount is a map where the key is the item id and the value is the discount.
      * @return the object the method was called on.
      */
-    fun addDiscount(customerId: String, discount: Map<String, Int>): DiscountRegistry {
+     fun addDiscount(customerId: String, discount: Map<String, Int>): DiscountRegistry {
         discounts[customerId]?.let { it.putAll(discount)} ?: discounts.put(customerId, discount.toMutableMap())
         return this
     }
 
-    /**
-     * Removes all discounts.
-     */
-    fun clear() {
-        discounts.clear()
-    }
 }

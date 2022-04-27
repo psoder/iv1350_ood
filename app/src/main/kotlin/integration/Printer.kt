@@ -1,29 +1,29 @@
 package integration
 
 import model.Receipt
-/**
- * Abstraction for a printer
- */
+
+/** Abstraction for a printer */
 object Printer {
 
     private val eol: String = System.getProperty("line.separator")
 
     /**
      * Prints a given receipt to standard out.
-     * 
+     *
      * @param the receipt to print
      */
     fun print(receipt: Receipt) {
-        val items = receipt.items.fold("") {
-                acc, (item, disc, qty) ->
-                acc.plus("${item.name}\t")
-                    .plus("${item.price}\t")
-                    .plus("${qty}\t")
-                    .plus("${item.vat.rate}%\t")
-                    .plus("${disc}%$eol")
-            }
+        val items =
+                receipt.items.fold("") { acc, (item, disc, qty) ->
+                    acc.plus("${item.name}\t")
+                            .plus("${item.price}\t")
+                            .plus("${qty}\t")
+                            .plus("${item.vat.rate}%\t")
+                            .plus("${disc}%$eol")
+                }
 
-        println("""
+        println(
+                """
             |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             |Time:   ${receipt.time}
             |-----------------------------------------

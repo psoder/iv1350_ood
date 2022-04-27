@@ -9,7 +9,7 @@ class View(val controller: Controller) {
 
     private val eol: String = System.getProperty("line.separator")
 
-    fun saleList(): String {
+    private fun saleList(): String {
         val sale: Sale = controller.register.sale
             ?: throw IllegalStateException("No current sale")
         

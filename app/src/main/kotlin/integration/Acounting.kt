@@ -18,17 +18,10 @@ object Accounting {
 
     /**
      * Returns the logs as a list.
-     * 
+     *
      * @return A list of all receipts.
      */
     fun getLogs(): List<Receipt> {
         return receipts.toList()
-    }
-
-    /**
-     * Removes all current logs.
-     */
-    fun clear() {
-        receipts.clear()
     }
 }
