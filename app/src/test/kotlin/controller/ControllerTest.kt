@@ -4,68 +4,58 @@ import integration.*
 import model.Item
 import model.Receipt
 import model.SaleItem
-import kotlin.test.*
+import org.junit.jupiter.api.*
 import util.Logger
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ControllerTest {
 
-    init {
-        DiscountRegistry
-    }
+    val printer = Printer()
+    val itemRegistry = ItemRegistry()
+    val discountRegistry = DiscountRegistry()
+    val salesLog = SalesLog()
+    val accounting = Accounting()
 
     val logger = Logger("controller.test.log", true)
+    val controller =
+            Controller(printer, itemRegistry, discountRegistry, salesLog, accounting, logger)
 
-    @BeforeTest
-    fun setup() {
-        ItemRegistry.addItem(Item("0", "Apple", 12.1), 20)
+    init {
+        itemRegistry.addItem(Item("0", "Apple", 12.1), 20)
+        controller.newSale()
     }
 
-    @AfterTest
-    fun tearDown() {
-        ItemRegistry.clear()
-    }
+    @BeforeEach fun beforeEach() {}
+
+    @AfterEach fun afterEach() {}
 
     @Test
     fun `fails when entering nonexistent item id`() {
-        val controller = createController()
-        controller.newSale()
-
-        assertFailsWith(NoSuchElementException::class) { controller.enterItem("-1") }
+        Assertions.assertThrows(NoSuchElementException::class.java) { controller.enterItem("-1") }
     }
 
     @Test
     fun `fails when entering zero or fewer items`() {
-        val controller = createController()
-        controller.newSale()
-
-        assertFailsWith(IllegalArgumentException::class) { controller.enterItem("0", 0) }
-        assertFailsWith(IllegalArgumentException::class) { controller.enterItem("0", -1) }
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
+            controller.enterItem("0", 0)
+        }
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
+            controller.enterItem("0", -1)
+        }
     }
 
     @Test
     fun `fails when entering nonexistent customer id`() {
-        val controller = createController()
-        controller.newSale()
-
-        assertFailsWith(NoSuchElementException::class) { controller.applyDiscount("-1") }
+        Assertions.assertThrows(NoSuchElementException::class.java) {
+            controller.applyDiscount("-1")
+        }
     }
 
     @Test
     fun `paying logs receipt in external systems`() {
-        val controller = createController()
-        controller.newSale()
-        controller.enterItem("0")
-
+        controller.enterItem("0", 1)
         val actual = controller.pay(100.0)
         val expected = Receipt(listOf(SaleItem(Item("0", "Apple", 12.1), 0, 1)), 100.0)
-        assertEquals(expected, actual)
-    }
-
-    fun createController(): Controller {
-        return Controller(
-                itemRegistry = ItemRegistry,
-                discountRegistry = DiscountRegistry,
-                logger = logger
-        )
+        Assertions.assertEquals(expected, actual)
     }
 }

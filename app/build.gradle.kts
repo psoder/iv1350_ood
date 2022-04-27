@@ -9,7 +9,6 @@
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.6.20"
-    id("org.jetbrains.dokka") version "1.6.20"
 
     // Apply the application plugin to add support for building a CLI application in Java.
     application
@@ -31,14 +30,19 @@ dependencies {
     implementation("com.google.guava:guava:30.1.1-jre")
 
     // Use the Kotlin test library.
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    // testImplementation("org.jetbrains.kotlin:kotlin-test")
 
     // Use the Kotlin JUnit integration.
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    // testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 
     // dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.20")
 
     testImplementation("io.mockk:mockk:1.12.3")
+    
+    testImplementation(platform("org.junit:junit-bom:5.8.2"))
+
+    testImplementation("org.junit.jupiter:junit-jupiter")
+
 }
 
 application {
@@ -46,21 +50,19 @@ application {
     mainClass.set("main.MainKt")
 }
 
-sourceSets {
-    main { java { setSrcDirs(listOf("/main/")) } }
-
-    // test { java { setSrcDirs(listOf("test")) } }
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_16
-    targetCompatibility = JavaVersion.VERSION_16
-}
+// java {
+//     sourceCompatibility = JavaVersion.VERSION_16
+//     targetCompatibility = JavaVersion.VERSION_16
+// }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions { jvmTarget = "16" }
+    kotlinOptions { jvmTarget = "11" }
 }
 
-tasks.named<JavaExec>("run") { standardInput = System.`in` }
+tasks.test {
+    useJUnitPlatform()
+    testLogging { events("skipped", "failed") }
+}
 
-tasks.dokkaHtml.configure { outputDirectory.set(buildDir.resolve("dokka")) }
+
+tasks.named<JavaExec>("run") { standardInput = System.`in` }

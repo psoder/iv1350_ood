@@ -1,30 +1,24 @@
 package integration
 
-import kotlin.test.*
 import model.Item
 import model.Receipt
 import model.SaleItem
+import org.junit.jupiter.api.*
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SalesLogTest {
 
-    init {
-    }
-    
-    @BeforeTest
-    fun setup() {
-        SalesLog.log(Receipt(listOf(SaleItem(Item("0", "a", 1.2), 4, 5)), 6.7))
-    }
+    val salesLog = SalesLog()
 
-    @AfterTest
-    fun tearDown() {
-        ItemRegistry.clear()
+    init {
+        salesLog.log(Receipt(listOf(SaleItem(Item("0", "a", 1.2), 4, 5)), 6.7))
     }
 
     @Test
     fun `logging items adds to log`() {
         val rec = Receipt(listOf(SaleItem(Item("1", "b", 9.8), 7, 6)), 5.4)
-        SalesLog.log(rec)
+        salesLog.log(rec)
 
-        assertContains(SalesLog.getLogs(), rec)
+        Assertions.assertTrue(salesLog.getLogs().contains(rec))
     }
 }

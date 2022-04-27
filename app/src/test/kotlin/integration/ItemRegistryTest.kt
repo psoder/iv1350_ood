@@ -1,28 +1,25 @@
 package integration
 
-import kotlin.test.*
 import model.Item
+import org.junit.jupiter.api.*
+import integration.ItemRegistry
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ItemRegistryTest {
 
-    @BeforeTest
-    fun setup() {
-        ItemRegistry.addItem(Item("0", "Apple", 12.1), 20)
-    }
-
-    @AfterTest
-    fun tearDown() {
-        ItemRegistry.clear()
+    val itemRegistry = ItemRegistry()
+    
+    init {
+        itemRegistry.addItem(Item("0", "Apple", 12.1), 20)
     }
 
     @Test
     fun `returns null for nonexistent id`() {
-        assertNull(ItemRegistry.getItem("-1"))
+        Assertions.assertNull(itemRegistry.getItem("-1"))
     }
 
     @Test
     fun `updateInventory updates inventory`() {
-        ItemRegistry.addItem(Item("1", "b", 20.0), 20)
-        assertNotNull(ItemRegistry.getItem("1"))
+        Assertions.assertNotNull(itemRegistry.getItem("0"))
     }
 }
