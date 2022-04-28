@@ -10,13 +10,15 @@ import util.Logger
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ControllerTest {
 
-    val printer = Printer()
+    val eol: String = System.getProperty("line.separator")
+
+    val printer = Printer(eol)
     val itemRegistry = ItemRegistry()
     val discountRegistry = DiscountRegistry()
     val salesLog = SalesLog()
     val accounting = Accounting()
 
-    val logger = Logger("controller.test.log", true)
+    val logger = Logger("controller.test.log", eol, true)
     val controller =
             Controller(printer, itemRegistry, discountRegistry, salesLog, accounting, logger)
 

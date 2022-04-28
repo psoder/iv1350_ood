@@ -3,11 +3,11 @@ package integration
 import model.Receipt
 
 /**
- * Abstraction for a printer
+ * Abstraction for a printer.
+ * 
+ * @param eol is the end of line characthers.
  */
-class Printer {
-
-    private val eol: String = System.getProperty("line.separator")
+class Printer(val eol: String) {
 
     /**
      * Prints a given receipt to standard out.

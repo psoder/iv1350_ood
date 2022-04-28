@@ -5,9 +5,7 @@ import kotlin.system.exitProcess
 import model.Sale
 import model.PriceWithVAT
 
-class View(val controller: Controller) {
-
-    private val eol: String = System.getProperty("line.separator")
+class View(val controller: Controller, val eol: String) {
 
     private fun saleList(): String {
         val sale: Sale = controller.register.sale

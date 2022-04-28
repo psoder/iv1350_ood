@@ -4,9 +4,13 @@ import controller.*
 import integration.*
 import kotlin.random.Random
 import model.*
+import util.Logger
 import view.*
 
 fun main() {
+
+    val eol: String = System.getProperty("line.separator")
+
     // Integration
     val discountRegistry = DiscountRegistry()
     val itemRegistry = ItemRegistry()
@@ -32,15 +36,19 @@ fun main() {
     }
 
     // Controller
-    val controller = Controller(itemRegistry = itemRegistry, discountRegistry = discountRegistry)
+    val controller =
+            Controller(
+                    printer = Printer(eol),
+                    itemRegistry = itemRegistry,
+                    discountRegistry = discountRegistry,
+                    logger = Logger("controller.log", eol)
+            )
 
     // View
-    val view = View(controller)
+    val view = View(controller, eol)
     val revenueFile = TotalRevenueView()
-    val revenueView = TotalRevenueFileOutput()
-    controller.register
-        .addObserver(revenueFile)
-        .addObserver(revenueView)
+    val revenueView = TotalRevenueFileOutput("balance", eol)
+    controller.register.addObserver(revenueFile).addObserver(revenueView)
 
     view.handleSale()
 }

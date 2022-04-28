@@ -6,10 +6,11 @@ import model.RegisterObserver
 /**
  * Implementaion of the [RegisterObserver] interface.
  * Writes the new balance to a file.
+ * 
+ * @param filePath is the path to the output file.
+ * @param eol is the end of line characthers.
  */
-class TotalRevenueFileOutput : RegisterObserver {
-
-    private val eol: String = System.getProperty("line.separator")
+class TotalRevenueFileOutput(val filePath: String, val eol: String) : RegisterObserver {
 
     /**
      * Writes the [newBalance] to a file.
@@ -18,7 +19,7 @@ class TotalRevenueFileOutput : RegisterObserver {
      * @throws Exception when something goes wrong.
      */
     override fun showRegisterBalance(newBalance: Double) {
-        File("balance").appendText("$newBalance$eol")
+        File(filePath).appendText("$newBalance$eol")
     }
     
     /**

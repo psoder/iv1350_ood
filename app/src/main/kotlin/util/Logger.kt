@@ -8,11 +8,10 @@ import java.time.LocalDateTime
  *
  * @param fielPath is the path to the file to log into.
  * @param quiet if the logger shouldn't log.
+ * @param eol is the end of line characthers.
  */
-class Logger(val filePath: String, val quiet: Boolean = false) {
-
-    private val eol: String = System.getProperty("line.separator")
-
+class Logger(val filePath: String, val eol: String, val quiet: Boolean = false) {
+    
     /**
      * Logs the text.
      * 
