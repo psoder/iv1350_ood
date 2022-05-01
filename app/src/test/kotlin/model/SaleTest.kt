@@ -4,73 +4,52 @@ import org.junit.jupiter.api.*
 
 class SaleTest {
 
+    lateinit var sale: Sale
+    val item = Item("0", "apple", 10.0, VatRate.MIDDLE)
+    val discounts = mapOf("0" to 25, "1" to 10, "3" to 20)
+
+    @BeforeEach
+    fun setup() {
+        sale = Sale()
+    }
+
     @Test
     fun `add item updates list`() {
-        val tr = Sale()
-        val item = Item("1", "a", 10.0)
-        tr.addItem(item)
-
-        Assertions.assertEquals(tr.items.toList(), listOf(SaleItem(item, 0, 1)))
+        sale.addItem(item)
+        Assertions.assertEquals(sale.items.toList(), listOf(SaleItem(item, 0, 1)))
     }
 
     @Test
     fun `fails when adding zero or negative quantity`() {
-        val tr = Sale()
-        val item = Item("1", "a", 10.0)
-
-        Assertions.assertThrows(IllegalArgumentException::class.java) { tr.addItem(item, 0) }
-        Assertions.assertThrows(IllegalArgumentException::class.java) { tr.addItem(item, -1) }
+        Assertions.assertThrows(IllegalArgumentException::class.java) { sale.addItem(item, 0) }
+        Assertions.assertThrows(IllegalArgumentException::class.java) { sale.addItem(item, -1) }
     }
 
     @Test
     fun `apply discount decreases price`() {
-        val s = Sale()
-        val item = Item("1", "a", 10.0)
-        val discounts = mapOf("1" to 25)
-        s.addItem(item)
-
-        s.priceStrategy = PriceWithoutVAT
-        val before = s.price()
-        s.applyDiscount(discounts)
-        val after = s.price()
-
+        sale.addItem(item)
+        sale.priceStrategy = PriceWithoutVAT
+        val before = sale.price()
+        sale.applyDiscount(discounts)
+        val after = sale.price()
         Assertions.assertEquals(after, before * 0.75)
     }
 
     @Test
     fun `fails if applying negative discount`() {
-        val tr = Sale()
-        val item = Item("1", "a", 10.0)
-        val discounts = mapOf("1" to -25)
-        tr.addItem(item)
-
-        Assertions.assertThrows(IllegalArgumentException::class.java) { tr.applyDiscount(discounts) }
+        sale.addItem(item)
+        Assertions.assertThrows(IllegalArgumentException::class.java) { sale.applyDiscount(mapOf("0" to -1)) }
     }
 
     @Test
     fun `correct price`() {
-        val tr = Sale()
-        val item = Item("1", "a", 10.0)
-        tr.addItem(item)
-
-        Assertions.assertEquals(tr.price(), 10.0)
+        sale.addItem(item)
+        Assertions.assertEquals(10.0, sale.price())
     }
 
     @Test
     fun `correct vat`() {
-        val tr = Sale()
-        val item = Item("1", "a", 10.0, VatRate.LOW)
-        tr.addItem(item)
-
-        Assertions.assertEquals(tr.vat(), 0.6)
-    }
-
-    @Test
-    fun `correct vat if price is negative`() {
-        val tr = Sale()
-        val item = Item("1", "a", -10.0, VatRate.LOW)
-        tr.addItem(item)
-
-        Assertions.assertEquals(tr.vat(), 0.0)
+        sale.addItem(item)
+        Assertions.assertEquals(1.2, sale.vat())
     }
 }

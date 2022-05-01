@@ -6,10 +6,12 @@ import integration.ItemRegistry
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ItemRegistryTest {
-
-    val itemRegistry = ItemRegistry()
     
-    init {
+    lateinit var itemRegistry: ItemRegistry
+
+    @BeforeEach
+    fun setup() {
+        itemRegistry = ItemRegistry()
         itemRegistry.addItem(Item("0", "Apple", 12.1), 20)
     }
 

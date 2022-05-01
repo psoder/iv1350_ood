@@ -5,13 +5,13 @@ import model.Receipt
 import model.SaleItem
 import org.junit.jupiter.api.*
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SalesLogTest {
 
-    val salesLog = SalesLog()
+    lateinit var salesLog: SalesLog
 
-    init {
-        salesLog.log(Receipt(listOf(SaleItem(Item("0", "a", 1.2), 4, 5)), 6.7))
+    @BeforeEach
+    fun setup() {
+        salesLog = SalesLog()
     }
 
     @Test
