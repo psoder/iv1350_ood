@@ -9,7 +9,7 @@ The tests are located in [app/src/test/kotlin](app/src/test/kotlin).
 
 ### Dependencies
 
-- Java 16
+- Java 11 (or higher)
 
 ### Running the app
 

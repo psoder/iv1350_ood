@@ -5,6 +5,7 @@ import model.Receipt
 import model.SaleItem
 import org.junit.jupiter.api.*
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SalesLogTest {
 
     lateinit var salesLog: SalesLog
