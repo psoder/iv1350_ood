@@ -9,3 +9,4 @@
 
 rootProject.name = "pos"
 include("app")
+include("libImplementaion")
