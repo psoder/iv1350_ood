@@ -38,7 +38,7 @@ class RegisterTest {
     fun `ending sale set sale to null`() {
         register.newSale()
         register.pay(0.0)
-        Assertions.assertNull(register.sale)
+        Assertions.assertNull(register.currentSale())
     }
 
     @Test
@@ -46,7 +46,7 @@ class RegisterTest {
         register.newSale()
         register.enterItem(item0)
         val expected = listOf(SaleItem(item0, 0, 1))
-        val actual = register.sale?.items?.toList()
+        val actual = register.currentSale()?.items?.toList()
         Assertions.assertEquals(expected, actual)
     }
 

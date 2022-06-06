@@ -48,7 +48,8 @@ fun main() {
     val view = View(controller, eol)
     val revenueFile = TotalRevenueView()
     val revenueView = TotalRevenueFileOutput("balance", eol)
-    controller.register.addObserver(revenueFile).addObserver(revenueView)
+    controller.addRegisterObserver(revenueFile)
+    controller.addRegisterObserver(revenueView)
 
     view.handleSale()
 }

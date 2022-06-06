@@ -9,12 +9,11 @@ import integration.*
 class Register {
 
     private val observers = ArrayList<RegisterObserver>()
-    
+
     var balance = 0.0
         private set
 
-    var sale: Sale? = null
-        private set
+    private var sale: Sale? = null
 
     /**
      * Starts a new sale.
@@ -38,7 +37,9 @@ class Register {
         val s: Sale = sale ?: throw IllegalStateException("No current sale")
         s.priceStrategy = PriceWithVAT
         val price = s.price()
-        require(amount >= price) { "You're poor, ${"%.2f".format(amount)} is less than ${"%.2f".format(price)}" }
+        require(amount >= price) {
+            "You're poor, ${"%.2f".format(amount)} is less than ${"%.2f".format(price)}"
+        }
 
         balance += price
         val receipt = s.getReceipt(amount)
@@ -57,8 +58,7 @@ class Register {
      */
     fun enterItem(item: Item, quantity: Int = 1) {
         require(quantity > 0) { "Quantity ($quantity) must add a positive non-zero integer" }
-        sale?.addItem(item, quantity)
-                ?: throw IllegalStateException("No current sale")
+        sale?.addItem(item, quantity) ?: throw IllegalStateException("No current sale")
     }
 
     /**
@@ -69,20 +69,25 @@ class Register {
      * @throws IllegalArgumentException if the discount is negative.
      */
     fun applyDiscount(discounts: Map<String, Int>) {
-        sale?.applyDiscount(discounts)
-                ?: throw IllegalStateException("No current sale")
+        sale?.applyDiscount(discounts) ?: throw IllegalStateException("No current sale")
     }
 
     /**
-     * Adds an [RegisterObserver] to the observers. The observer is notified when the state changes.
-     * 
-     * @param obs is an object that implements the [RegisterObserver] interface.
-     * @return The object the method was called on. 
+     * Returns the current sale. If there's no ongoign sale it returns null.
+     *
+     * @return the current sale
      */
-    fun addObserver(obs: RegisterObserver): Register {
+    fun currentSale() = sale
+
+    /**
+     * Adds an [RegisterObserver] to the observers. The observer is notified when the state changes.
+     *
+     * @param obs is an object that implements the [RegisterObserver] interface.
+     * @return True if the
+     */
+    fun addObserver(obs: RegisterObserver) {
         observers.add(obs)
-        return this
     }
-    
-    private fun notifyObservers() = observers.forEach{it.newSaleWasMade(balance)}
+
+    private fun notifyObservers() = observers.forEach { it.newSaleWasMade(balance) }
 }

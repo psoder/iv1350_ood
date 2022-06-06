@@ -2,10 +2,10 @@
 
 ## The Program
 
-The code is located in [app/src/main/kotlin](app/src/main/kotlin) and the main
-file is [Main.kt](app/src/main/kotlin/Main.kt).
+The code is located in [point-of-sale/app/src/main/kotlin](point-of-sale/app/src/main/kotlin)
+and the main file is [Main.kt](point-of-sale/app/src/main/kotlin/Main.kt).
 
-The tests are located in [app/src/test/kotlin](app/src/test/kotlin).
+The tests are located in [app/src/test/kotlin](point-of-sale/app/src/test/kotlin).
 
 ### Dependencies
 

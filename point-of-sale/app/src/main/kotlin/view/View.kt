@@ -2,15 +2,12 @@ package view
 
 import controller.Controller
 import kotlin.system.exitProcess
-import model.Sale
 import model.PriceWithVAT
+import model.Sale
 
 class View(val controller: Controller, val eol: String) {
 
-    private fun saleList(): String {
-        val sale: Sale = controller.register.sale
-            ?: throw IllegalStateException("No current sale")
-        
+    private fun listSale(sale: Sale): String {
         sale.priceStrategy = PriceWithVAT
 
         if (sale.items.any()) {
@@ -30,7 +27,7 @@ class View(val controller: Controller, val eol: String) {
 
     fun handleSale() {
         while (true) {
-            println("Register Balance: ${"%.2f".format(controller.register.balance)}")
+            println("Register Balance: ${"%.2f".format(controller.registerBalance())}")
 
             println("1. New Sale")
             println("2. Exit")
@@ -41,7 +38,8 @@ class View(val controller: Controller, val eol: String) {
                     while (true) {
                         println("${eol}Item\tPrice\tQty\tVAT\tDiscount")
                         println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                        print("${saleList()}")
+                        print("${listSale(controller.currentSale()
+                            ?: throw IllegalStateException("No ongoing sale"))}")
                         println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~$eol")
 
                         println("1. Enter item")

@@ -1,17 +1,12 @@
 package controller
 
 import integration.*
-import model.Register
-import model.Item
-import model.Receipt
-import java.io.File
-import java.io.PrintWriter
-import util.Logger
-import util.NoSuchServiceException
+import model.*
+import util.*
 
 /**
- * Respinsible for coordinating interaction between views and the rest of the system. 
- * 
+ * Respinsible for coordinating interaction between views and the rest of the system.
+ *
  * @param printer the printer to use.
  * @param itemRegistry the item registry to use.
  * @param discountRegistry the discount registry to use.
@@ -19,19 +14,19 @@ import util.NoSuchServiceException
  * @param accounting the accounting system to use.
  * @param logger the logger to use.
  */
-class Controller (
-    private val printer: Printer,
-    private val itemRegistry: ItemRegistry = ItemRegistry(),
-    private val discountRegistry: DiscountRegistry = DiscountRegistry(),
-    private val salesLog: SalesLog = SalesLog(),
-    private val accounting: Accounting = Accounting(),
-    private val logger: Logger,
+class Controller(
+        private val printer: Printer,
+        private val itemRegistry: ItemRegistry = ItemRegistry(),
+        private val discountRegistry: DiscountRegistry = DiscountRegistry(),
+        private val salesLog: SalesLog = SalesLog(),
+        private val accounting: Accounting = Accounting(),
+        private val logger: Logger,
 ) {
-    val register: Register = Register()
+    private val register: Register = Register()
 
     /**
      * Starts a new sale.
-     * 
+     *
      * @throws IllegalStateException when there's an ongoing sale.
      */
     fun newSale() {
@@ -57,10 +52,10 @@ class Controller (
      */
     fun enterItem(id: String, quantity: Int = 1) {
         try {
-            val item: Item = itemRegistry.getItem(id) 
-                ?: throw NoSuchElementException("No item with id '$id' exists")
+            val item: Item =
+                    itemRegistry.getItem(id)
+                            ?: throw NoSuchElementException("No item with id '$id' exists")
             register.enterItem(item, quantity)
-
         } catch (e: NoSuchElementException) {
             logger.log(e)
             throw e
@@ -88,9 +83,11 @@ class Controller (
      */
     fun applyDiscount(customerId: String) {
         try {
-            val discounts: Map<String, Int> = 
-            discountRegistry.getDiscount(customerId)
-                ?: throw NoSuchElementException("No customer with id '$customerId' exists")
+            val discounts: Map<String, Int> =
+                    discountRegistry.getDiscount(customerId)
+                            ?: throw NoSuchElementException(
+                                    "No customer with id '$customerId' exists"
+                            )
             register.applyDiscount(discounts)
         } catch (e: NoSuchElementException) {
             logger.log(e)
@@ -104,8 +101,7 @@ class Controller (
     }
 
     /**
-     * Ends the current sale and pays for the items and prints a receipt
-     * for the sale.
+     * Ends the current sale and pays for the items and prints a receipt for the sale.
      *
      * @param amount is the amount the customer pays
      * @return a nullable receipt of the sale
@@ -131,4 +127,16 @@ class Controller (
         }
         return receipt
     }
+
+    /**
+     * Returns the current sale. If there's no ongoign sale it returns null.
+     *
+     * @return the current sale or null.
+     */
+    fun currentSale() = register.currentSale()
+
+    /** Adds the observer as an observer to the register. */
+    fun addRegisterObserver(observer: RegisterObserver) = register.addObserver(observer)
+
+    fun registerBalance() = register.balance
 }
