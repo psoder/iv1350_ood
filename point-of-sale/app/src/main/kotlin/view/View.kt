@@ -4,6 +4,7 @@ import controller.Controller
 import kotlin.system.exitProcess
 import model.PriceWithVAT
 import model.Sale
+import java.util.Scanner
 
 class View(val controller: Controller, val eol: String) {
 
@@ -21,47 +22,53 @@ class View(val controller: Controller, val eol: String) {
                 .plus("----------------------------------------$eol")
                 .plus("Total:\t${"%.2f".format(sale.price())} (of which ${"%.2f".format(sale.vat())} is VAT)$eol")
                 .plus("")
+        } else {
+            return ""
         }
-        return ""
     }
 
-    fun handleSale() {
+    fun handleSale(scanner: Scanner = Scanner(System.`in`)) {
         while (true) {
-            println("Register Balance: ${"%.2f".format(controller.registerBalance())}")
+            println("""
+                |Register Balance: ${"%.2f".format(controller.registerBalance())}
+                |
+                |1. New Sale
+                |2. Exit
+                |
+                """.trimMargin())
 
-            println("1. New Sale")
-            println("2. Exit")
-
-            when (readLine()!!) {
+            when (scanner.nextLine()) {
                 "1" -> {
                     controller.newSale()
                     while (true) {
-                        println("${eol}Item\tPrice\tQty\tVAT\tDiscount")
-                        println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                        print("${listSale(controller.currentSale()
-                            ?: throw IllegalStateException("No ongoing sale"))}")
-                        println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~$eol")
-
-                        println("1. Enter item")
-                        println("2. Apply discount")
-                        println("3. Finnish sale")
+                        println("""
+                            |Item\tPrice\tQty\tVAT\tDiscount
+                            |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                            |${listSale(controller.currentSale() ?: throw IllegalStateException("No ongoing sale"))}
+                            |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                            |
+                            |1. Enter item
+                            |2. Apply discount
+                            |3. Finnish sale
+                            |
+                            """.trimMargin())
 
                         try {
-                            when (readLine()!!) {
+                            when (scanner.nextLine()) {
                                 "1" -> {
-                                    println("${eol}Enter item ID: (id [quantity])")
+                                    println("Enter item ID: (id [quantity])")
                                     // Hacky way to get the input for both parameters. It's good enough.
-                                    val input = readLine()!!.split(" ")
+                                    val input = scanner.nextLine()!!.split(" ")
                                     val qty = input.getOrNull(1)?.toInt() ?: 1
                                     controller.enterItem(input[0], qty)
                                 }
                                 "2" -> {
-                                    println("${eol}Enter customer ID: (id)")
-                                    controller.applyDiscount(readLine()!!)
+                                    println("Enter customer ID: (id)")
+                                    controller.applyDiscount(scanner.nextLine())
                                 }
                                 "3" -> {
-                                    println("${eol}Enter amount paid: (amount)")
-                                    controller.pay(readLine()!!.toDouble())
+                                    println("Enter amount paid: (amount)")
+                                    controller.pay(scanner.nextLine().toDouble())
                                     break
                                 }
                                 else -> {

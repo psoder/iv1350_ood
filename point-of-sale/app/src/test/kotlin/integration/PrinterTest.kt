@@ -8,7 +8,6 @@ import org.junit.jupiter.api.*
 import java.io.*
 import java.time.*
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PrinterTest {
 
     lateinit var printer: Printer
@@ -34,17 +33,17 @@ class PrinterTest {
             |Item:   Price:  Qty:    VAT:    Discount:
             |-----------------------------------------
             |Apple   10.0    1       12.0%   10%
-            |Total:  ${10*1.12*0.9}
+            |Total:  ${"%.2f".format(10*1.12*0.9)}
             |-----------------------------------------
-            |Price:  ${10*1.12*0.9}
-            |VAT:    ${10*0.12*0.9}
-            |Paid:   100.0
-            |Change: ${100-10*1.12*0.9}
+            |Price:  ${"%.2f".format(10*1.12*0.9)}
+            |VAT:    ${"%.2f".format(10*0.12*0.9)}
+            |Paid:   ${"%.2f".format(100.0)}
+            |Change: ${"%.2f".format(100-10*1.12*0.9)}
             |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             """.trimMargin()
 
         printer.print(receipt)
 
-        Assertions.assertEquals(expected, outContent.toString())
+        Assertions.assertEquals(expected.replace("\\s".toRegex(), ""), outContent.toString().replace("\\s".toRegex(), ""))
     }
 }
