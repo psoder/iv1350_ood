@@ -5,24 +5,26 @@ import kotlin.collections.Iterator
  * Prints five random characthers.
  */
 fun main() {
-    val randomat = RandomChar()
-    val charMap = HashMap<Int, Char>()
+    val randomInheritance = RandomCharInheritance()
+    val randomComposition = RandomCharComposition()
+
+    println("With inheritance")
+    for (i in 1..5) {
+        print("${randomInheritance.nextChar()} ")
+    }
+
+    println("\n\nWith composition")
 
     for (i in 1..5) {
-        charMap[i] = randomat.nextChar()
+        print("${randomComposition.nextChar()} ")
     }
-
-    val mi = MapIterator(charMap)
-
-    while (mi.hasNext()) {
-        print("${mi.next()} ")
-    }
+    println()
 }
 
 /**
  * Extension of the Random-class that supports random characthers.
  */
-class RandomChar : Random() {
+class RandomCharInheritance : Random() {
 
     /**
      * Returns a random characther.
@@ -32,27 +34,14 @@ class RandomChar : Random() {
     fun nextChar(): Char = nextInt().toChar()
 }
 
-/**
- * Iterates over a Map. Implements the iterator interface.
- */
-class MapIterator<K, V>(val map: Map<K, V>) : Iterator<V> {
+class RandomCharComposition {
 
-    private val keys = ArrayDeque(map.keys)
+    val random = Random()
 
     /**
-     * Returns true if the iteration has more elements. (In other words,
-     * returns true if next() would return an element rather than throwing an
-     * exception.)
-     * 
-     * @return true if the iteration has more elements
-     */
-    override fun hasNext(): Boolean = keys.any()
-
-    /**
-     * Returns the next element in the iteration.
+     * Returns a random characther.
      *
-     * @return the next element in the iteration.
-     * @throws NoSuchElementException if the iteration has no more elements
+     * @return a random char.
      */
-    override fun next(): V = map[keys.removeFirst()]!!
+    fun nextChar(): Char = random.nextInt().toChar()
 }
