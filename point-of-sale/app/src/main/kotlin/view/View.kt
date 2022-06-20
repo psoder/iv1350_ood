@@ -2,17 +2,16 @@ package view
 
 import controller.Controller
 import kotlin.system.exitProcess
-import model.PriceWithVAT
-import model.Sale
+import model.*
 import java.util.Scanner
 
 class View(val controller: Controller, val eol: String) {
 
-    private fun listSale(sale: Sale): String {
-        sale.priceStrategy = PriceWithVAT
+    private fun listSale(): String {
+        val items = controller.saleItems()
 
-        if (sale.items.any()) {
-            return sale.items.fold("") { acc, (item, disc, qty) ->
+        if (items.any()) {
+            return items.fold("") { acc, (item, disc, qty) ->
                     acc.plus("${item.name}\t")
                             .plus("${item.price}\t")
                             .plus("${qty}\t")
@@ -20,7 +19,7 @@ class View(val controller: Controller, val eol: String) {
                             .plus("${disc}%$eol")
                 }
                 .plus("----------------------------------------$eol")
-                .plus("Total:\t${"%.2f".format(sale.price())} (of which ${"%.2f".format(sale.vat())} is VAT)$eol")
+                .plus("Total:\t${"%.2f".format(controller.salePrice())} (of which ${"%.2f".format(controller.saleVat())} is VAT)$eol")
                 .plus("")
         } else {
             return ""
@@ -44,7 +43,7 @@ class View(val controller: Controller, val eol: String) {
                         println("""
                             |Item\tPrice\tQty\tVAT\tDiscount
                             |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                            |${listSale(controller.currentSale() ?: throw IllegalStateException("No ongoing sale"))}
+                            |${listSale()}
                             |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                             |
                             |1. Enter item

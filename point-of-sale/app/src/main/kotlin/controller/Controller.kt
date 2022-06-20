@@ -139,4 +139,38 @@ class Controller(
     fun addRegisterObserver(observer: RegisterObserver) = register.addObserver(observer)
 
     fun registerBalance() = register.balance
+
+    /**
+     * Returns the price of the current sale.
+     *
+     * @throws IllegalStateException if there is no current sale.
+     * @return the price of the sale.
+     */
+    fun salePrice(): Double {
+        val sale: Sale = currentSale() ?: throw IllegalStateException("No current sale")
+        sale.priceStrategy = PriceWithVAT
+        return sale.price()
+    }
+
+    /**
+     * Returns the VAT of the current sale.
+     *
+     * @throws IllegalStateException if there is no current sale.
+     * @return the VAT.
+     */
+    fun saleVat(): Double {
+        val sale: Sale = currentSale() ?: throw IllegalStateException("No current sale")
+        return sale.vat()
+    }
+
+    /**
+     * Returns the items in the current sale.
+     *
+     * @throws IllegalStateException if there is no current sale.
+     * @return the items.
+     */
+    fun saleItems(): List<SaleItem> {
+        val sale: Sale = currentSale() ?: throw IllegalStateException("No current sale")
+        return sale.items
+    }
 }
